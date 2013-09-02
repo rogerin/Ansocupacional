@@ -1,0 +1,22 @@
+<h2>Funcionário</h2>
+<p>
+	<%= link_to 'Editar', edit_funcionario_path(@funcionario), class: 'btn btn-xs btn-default' %>
+	<%= link_to 'Listar Funcionarios', funcionarios_path, class: 'btn btn-xs btn-default' %>
+</p>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nome:</b>
+  <%= @funcionario.nome %>
+</p>
+
+<p>
+  <b>Rg:</b>
+  <%= @funcionario.rg %>
+</p>
+
+<p>
+  <b>Empresa:</b>
+  <%= @funcionario.empresa.nome %>
+</p>

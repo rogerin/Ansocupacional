@@ -1,0 +1,33 @@
+<h2>Empresa</h2>
+<p>
+  <%= link_to 'Editar', edit_empresa_path(@empresa), class: 'btn btn-xs btn-default' %>
+  <%= link_to 'Listar Empresas', empresas_path, class: 'btn btn-xs btn-default' %>
+</p>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nome:</b>
+  <%= @empresa.nome %>
+</p>
+
+<p>
+  <b>Cnpj:</b>
+  <%= @empresa.cnpj %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @empresa.email %>
+</p>
+
+<p>
+  <b>Login:</b>
+  <%= @empresa.login %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @empresa.user.nome %>
+</p>
+
+

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  link: MyString
+  categoria_id: 1
+  funcionario_id: 1
+
+two:
+  link: MyString
+  categoria_id: 1
+  funcionario_id: 1

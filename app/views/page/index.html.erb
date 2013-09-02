@@ -1,0 +1,79 @@
+<h2>Resumo</h2>
+<p></p>
+
+<% if session[:user] %>
+	<% if session[:user_tipo] == 1 %>
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">Resumo de cadastros</div>
+			  	<ul class="list-group">
+				  <li class="list-group-item">
+				    <span class="badge"><%= @usuarios %></span>
+				    <%= link_to "Usuários", users_path %>
+				  </li>
+				  <li class="list-group-item">
+				    <span class="badge"><%= @categorias %></span>
+				    <%= link_to "Categorias", categorias_path %>
+				  </li>
+				  <li class="list-group-item">
+				    <span class="badge"><%= @empresas %></span>
+				    <%= link_to "Empresas", empresas_path %>
+				  </li>
+				  <li class="list-group-item">
+				    <span class="badge"><%= @funcionarios %></span>
+				    <%= link_to "Funcionários", funcionarios_path %>
+				  </li>
+				  <li class="list-group-item">
+				    <span class="badge"><%= @exames %></span>
+				    <%= link_to "Exames", exames_path %>
+				  </li>
+				  
+
+				</ul>
+			</div>
+		</div>
+	<% else %>
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">Resumo de cadastros</div>
+			  	<ul class="list-group">
+				  <li class="list-group-item">
+				    <span class="badge"><%= @categorias %></span>
+				    <%= link_to "Categorias", categorias_path %>
+				  </li>
+				  <li class="list-group-item">
+				    <span class="badge"><%= @empresas %></span>
+				    <%= link_to "Empresas", empresas_path %>
+				  </li>
+				  
+
+				</ul>
+			</div>
+		</div>
+	<% end %>
+<% else %>
+	<div class="col-lg-3">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">Resumo de cadastros</div>
+		  	<ul class="list-group">
+			  <li class="list-group-item">
+			    <span class="badge"><%= @categorias %></span>
+			    <%= link_to "Categorias", categorias_path %>
+			  </li>
+			  <li class="list-group-item">
+			    <span class="badge"><%= @funcionarios %></span>
+			    <%= link_to "Funcionários", funcionarios_path %>
+			  </li>
+			  <li class="list-group-item">
+			    <span class="badge"><%= @exames %></span>
+			    <%= link_to "Exames", exames_path %>
+			  </li>
+			  
+
+			</ul>
+		</div>
+	</div>
+<% end %>

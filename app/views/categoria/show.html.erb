@@ -1,0 +1,13 @@
+<h2>Categoria</h2>
+<p>
+	<%= link_to 'Editar', edit_categorium_path(@categorium), class: 'btn btn-xs btn-default' %> 
+	<%= link_to 'Listar Categorias', categoria_path, class: 'btn btn-xs btn-default' %>
+</p>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nome:</b>
+  <%= @categorium.nome %>
+</p>
+
+

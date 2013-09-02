@@ -1,0 +1,24 @@
+<h2>Usuário</h2>
+<p>
+  <%= link_to 'Editar', edit_user_path(@user), class: 'btn btn-xs btn-default' %>
+  <%= link_to 'Listar Usuários', users_path, class: 'btn btn-xs btn-default' %>
+</p>
+<p>
+  <b>Nome:</b>
+  <%= @user.nome %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Login:</b>
+  <%= @user.login %>
+</p>
+
+<p>
+  <b>Tipo:</b>
+  <%= return_tipo @user.tipo %>
+</p>

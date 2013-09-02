@@ -1,0 +1,61 @@
+<%= form_for(@user, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :nome %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :nome, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :email %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :email, class: 'form-control' %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :password %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :password, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :password_confirmation %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :password_confirmation, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :login %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :login, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :tipo %></label>
+    <div class="col-lg-4">
+      <%= f.number_field :tipo, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-2">
+      <%= f.submit 'Salvar', class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>

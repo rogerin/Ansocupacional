@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-lg-2">
+    <h2>Exames</h2>
+    <p>
+      <% if session[:empresa_id] %>
+      <% else %>
+        <%= link_to 'Enviar Exame', new_exame_path, class: 'btn btn-sm btn-default' %>
+      <% end %>
+      
+    </p>
+  </div>
+  <div class="col-lg-10">
+    <h2>Busca</h2>
+    <%= render 'form_busca' %>
+  </div>
+</div>
+
+<br/>
+<div class="row">
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Link</th>
+      <th>Categoria</th>
+      <th>Funcionario</th>
+
+      <th>Empresa</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% @exames.each do |exame| %>
+      <tr>
+        <td><%= link_to exame.link, "data/#{exame.link}" %></td>
+        <td><%= exame.categoria.nome %></td>
+        <td><%= exame.funcionario.nome %></td>
+        <td><%= exame.empresa_id %></td>
+        <td></td>
+        <td>
+          
+          <div class="btn-group btn-group-sm">
+            <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "data/#{exame.link}", class: "btn btn-default" %>
+            <%= link_to 'Visualizar', exame, class: "btn btn-default" %>
+            <%= link_to 'Editar', edit_exame_path(exame), class: "btn btn-default" %>
+            <%= link_to 'Deletar', exame, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>
+          </div>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+
+</div>
+</div>
+<br />
+
+

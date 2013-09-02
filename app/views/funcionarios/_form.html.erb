@@ -1,0 +1,40 @@
+<%= form_for(@funcionario, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @funcionario.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@funcionario.errors.count, "error") %> prohibited this funcionario from being saved:</h2>
+
+      <ul>
+      <% @funcionario.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :nome %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :nome, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :rg %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :rg, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :empresa_id %></label>
+    <div class="col-lg-4">
+      <%= collection_select(:funcionario, :empresa_id, @empresas, :id, :nome, {:prompt => 'Selecione a empresa que ele trabalha.'}, {:class=>'form-control'}) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-2">
+      <%= f.submit 'Salvar', class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>

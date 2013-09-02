@@ -1,0 +1,20 @@
+<%= form_tag exames_busca_path, :class => 'form-inline' do %>
+	 <% 
+	 if @empresa
+	 %>
+	 	<%= hidden_field :empresa_id, :value => session["empresa_id"] %>
+	 <%
+	 else
+	 %>
+
+	 	<div class="form-group">
+			<%= collection_select(:empresa, :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa...'}, {:class=>'form-control'}) %>
+		</div>
+
+	 <% end %>
+	<div class="form-group">
+		<%= collection_select(:categoria, :categoria_id, @categorias, :id, :nome, {:prompt => 'Categoria...'}, {:class=>'form-control'}) %>
+	</div>
+
+	<%= submit_tag 'Buscar', :class => 'btn btn-default' %>
+<% end -%>
