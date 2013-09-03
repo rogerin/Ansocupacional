@@ -3,20 +3,20 @@ class FuncionariosController < ApplicationController
   # GET /funcionarios.json
   def index
     # @funcionarios = Funcionario.all
-    if session[:empresa_id]
-      @funcionarios = Funcionario.where(empresa_id: session[:empresa_id])
-      @empresas = Empresa.where(id: session[:empresa_id])
-      @empresa = true
-    else
-      if session[:user]
-        if session[:user_tipo] == 1
-          @empresas = Empresa.all    
-        else
-          @empresas = Empresa.where(user_id: session[:user_id])  
-        end
+    if session[:user]
+      if session[:user_tipo] == 1
+        @empresas = Empresa.all
       else
-        @empresas = Empresa.where(empresa_id: session[:empresa_id])      
+        @empresas = Empresa.where(user_id: session[:user_id])  
       end
+    else
+      @empresas = Empresa.where(empresa_id: session[:empresa_id])      
+    end
+
+    if params[:funcionario]
+      @funcionarios = Funcionario.where(empresa_id: params[:funcionario][:empresa_id])
+    else
+      @funcionarios = []
     end
 
     respond_to do |format|
