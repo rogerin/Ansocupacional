@@ -3,6 +3,8 @@ class Empresa < ActiveRecord::Base
   has_secure_password
   belongs_to :user
   has_many :funcionarios
+  has_many :exames
+
 
 	def self.login(login,password)
 		find_by_login(login).try(:authenticate, password)

@@ -3,7 +3,7 @@ class ExamesController < ApplicationController
   # GET /exames.json
   def index
     if params[:categoria]
-      @exames = Exame.where(categoria_id: params[:categoria][:categoria_id])
+      @exames = Exame.order('nome').where(categoria_id: params[:categoria][:categoria_id])
     else
       @exames = []
     end
@@ -41,17 +41,38 @@ class ExamesController < ApplicationController
 
   # POST / exames/busca
   def busca
-    if params[:categoria]
-      @exames = Exame.where(categoria_id: params[:categoria][:categoria_id])
-    else
-      @exames = []
-    end
+    @por_categoria = []
+    @por_empresa = []
+    @por_inicio = []
+    @por_funcionarios = []
+
     
-    if params[:empresa]
-      @exames = Exame.where(empresa_id: params[:empresa][:empresa_id])
-    else
-      @exames = []
+
+     if params[:busca][:nome].present?
+
+      @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
+       @ids = []
+      @funcionarios_ids.each do |func|
+        @ids << func.id
+      end
+      @por_funcionarios = Exame.where(:funcionario_id => @ids)
+
+
     end
+
+    if params[:busca][:categoria_id].present?
+      @por_categoria =  Exame.where(categoria_id: params[:busca][:categoria_id])
+    end
+    if params[:busca][:empresa_id].present?
+      @por_empresa =  Exame.where(empresa_id: params[:busca][:empresa_id])
+    end
+    if params[:busca][:data_inicio].present?
+      @por_inicio =  Exame.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+    end
+
+    @exames = @por_categoria+@por_empresa+@por_inicio+@por_funcionarios
+
+
     
     if session[:empresa_id]
       @funcionarios = Funcionario.order('nome').where(empresa_id: session[:empresa_id])
@@ -126,10 +147,10 @@ class ExamesController < ApplicationController
   # POST /exames
   # POST /exames.json
   def create
-    post = Exame.save(params[:exame][:link])
+    post = Exame.save(params[:exame][:link],params[:exame][:funcionario_id])
     
     
-    @exame = Exame.new(link: post, categoria_id: params[:exame][:categoria_id], funcionario_id: params[:exame][:funcionario_id])
+    @exame = Exame.new(link: post, categoria_id: params[:exame][:categoria_id], funcionario_id: params[:exame][:funcionario_id], empresa_id: params[:exame][:empresa_id])
 
 
     respond_to do |format|

@@ -7,13 +7,20 @@
 
 <p>
   <b>Categoria:</b>
-  <%= @exame.categoria_id %>
+  <%= @exame.categoria.nome %>
 </p>
 
 <p>
   <b>Funcionario:</b>
-  <%= @exame.funcionario_id %>
+  <%= @exame.funcionario.nome %>
 </p>
+
+<p>
+  <b>Empresa:</b>
+  <%= @exame.empresa.nome %>
+</p>
+
+
 
 
 <%= link_to 'Edit', edit_exame_path(@exame) %> |
