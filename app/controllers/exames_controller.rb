@@ -149,13 +149,12 @@ class ExamesController < ApplicationController
   def create
     post = Exame.save(params[:exame][:link],params[:exame][:funcionario_id])
     
-    
     @exame = Exame.new(link: post, categoria_id: params[:exame][:categoria_id], funcionario_id: params[:exame][:funcionario_id], empresa_id: params[:exame][:empresa_id])
 
 
     respond_to do |format|
       if @exame.save
-        format.html { redirect_to @exame, notice: 'Exame was successfully created.' }
+        format.html { redirect_to @exame, flash: { success: 'Exame enviado com sucesso.' } }
         format.json { render json: @exame, status: :created, location: @exame }
       else
         format.html { render action: "new" }
@@ -171,7 +170,7 @@ class ExamesController < ApplicationController
 
     respond_to do |format|
       if @exame.update_attributes(params[:exame])
-        format.html { redirect_to @exame, notice: 'Exame was successfully updated.' }
+        format.html { redirect_to @exame, flash: { success: 'Exame editado com sucesso.' } }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -187,7 +186,7 @@ class ExamesController < ApplicationController
     @exame.destroy
 
     respond_to do |format|
-      format.html { redirect_to exames_url }
+      format.html { redirect_to exames_url, flash: { success: 'Exame deletado com sucesso.' } }
       format.json { head :no_content }
     end
   end

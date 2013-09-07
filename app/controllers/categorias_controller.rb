@@ -44,7 +44,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.save
-        format.html { redirect_to @categoria, notice: 'Categoria was successfully created.' }
+        format.html { redirect_to @categoria, flash: { success: 'Categoria criado com sucesso.' } }
         format.json { render json: @categoria, status: :created, location: @categoria }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.update_attributes(params[:categoria])
-        format.html { redirect_to @categoria, notice: 'Categoria was successfully updated.' }
+        format.html { redirect_to @categoria, flash: { success: 'Categoria editada com sucesso.' } }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -76,7 +76,7 @@ class CategoriasController < ApplicationController
     @categoria.destroy
 
     respond_to do |format|
-      format.html { redirect_to categorias_url }
+      format.html { redirect_to categorias_url, flash: { success: 'Categoria deletada com sucesso.' } }
       format.json { head :no_content }
     end
   end

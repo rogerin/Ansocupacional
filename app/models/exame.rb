@@ -7,8 +7,8 @@ class Exame < ActiveRecord::Base
 
 	def self.save(upload,funcionario_id)
       @funcionario = Funcionario.find_by_id(funcionario_id)
-
-    	name =  @funcionario.rg + upload.original_filename
+      time = Time.new
+    	name =  @funcionario.rg + time.strftime("%Y%m%d%H%M%S") + upload.original_filename
     	directory = "public/data"
     	# create the file path
     	path = File.join(directory, name)

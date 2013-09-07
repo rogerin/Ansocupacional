@@ -1,7 +1,7 @@
 module ApplicationHelper
   def flash_message
     messages = ""
-    [:notice, :info, :warning, :error].each {|type|
+    [:notice, :info, :warning, :error, :success].each {|type|
       if flash[type]
       	if type == :notice
         	messages += "<div class=\"alert alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button> #{flash[type]}</div>"

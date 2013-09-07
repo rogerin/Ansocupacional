@@ -48,7 +48,7 @@ class EmpresasController < ApplicationController
 
     respond_to do |format|
       if @empresa.save
-        format.html { redirect_to @empresa, notice: 'Empresa was successfully created.' }
+        format.html { redirect_to @empresa, flash: { success: 'Empresa criado com sucesso.' } }
         format.json { render json: @empresa, status: :created, location: @empresa }
       else
         format.html { render action: "new" }
@@ -64,7 +64,7 @@ class EmpresasController < ApplicationController
 
     respond_to do |format|
       if @empresa.update_attributes(params[:empresa])
-        format.html { redirect_to @empresa, notice: 'Empresa was successfully updated.' }
+        format.html { redirect_to @empresa, flash: { success: 'Empresa editada com sucesso.' } }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -80,7 +80,7 @@ class EmpresasController < ApplicationController
     @empresa.destroy
 
     respond_to do |format|
-      format.html { redirect_to empresas_url }
+      format.html { redirect_to empresas_url, flash: { success: 'Empresa deletada com sucesso.' } }
       format.json { head :no_content }
     end
   end

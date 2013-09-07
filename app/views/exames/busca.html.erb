@@ -34,7 +34,7 @@
     <% @exames.each do |exame| %>
       <tr>
         <td><%= exame.funcionario.nome %></td>
-        <td><%= link_to exame.link, "data/#{exame.link}" %></td>
+        <td><%= link_to exame.link, "#{root_url}data/#{exame.link}" %></td>
         <td><%= exame.categoria.nome %></td>
         <td><%= exame.empresa.nome %></td>
         <td><%= exame.created_at.strftime("%d/%m/%Y") %></td>
@@ -43,7 +43,7 @@
             <% if session[:empresa_id] %>
               <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "data/#{exame.link}", class: "btn btn-default" %>
             <% else %>
-              <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "data/#{exame.link}", class: "btn btn-default" %>
+              <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{root_url}data/#{exame.link}", class: "btn btn-default" %>
               <%= link_to 'Visualizar', exame, class: "btn btn-default" %>
               <%= link_to 'Editar', edit_exame_path(exame), class: "btn btn-default" %>
               <%= link_to 'Deletar', exame, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>

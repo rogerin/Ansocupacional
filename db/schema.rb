@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20130831200056) do
     t.string   "password_digest"
     t.string   "login"
     t.integer  "tipo"
+    t.string   "link"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end

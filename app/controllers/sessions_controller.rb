@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
 					session[:user_id]	= @user.id
 					session[:user_nome] = @user.nome
 					session[:user_tipo] = @user.tipo
+					session[:user_link] = @user.link
 					session[:user]		= true
 					session[:logado]	= true
 					redirect_to session[:requested_url] || root_path
@@ -23,10 +24,12 @@ class SessionsController < ApplicationController
 				else
 					@empresa = Empresa.login(@session.login, @session.password)
 					if @empresa
+						@link = User.where(id: @empresa.user_id).first
 						session[:empresa_id]	= @empresa.id
 						session[:empresa_nome]	= @empresa.nome
 						session[:empresa_email]	= @empresa.email
 						session[:empresa_cnpj]	= @empresa.cnpj
+						session[:user_link] = @link.link
 						session[:user]			= false
 						session[:logado]		= true
 						redirect_to session[:requested_url] || root_path
@@ -42,16 +45,36 @@ class SessionsController < ApplicationController
 
 
 	def destroy
-		session[:user_id] = nil
-		session[:user_nome] = nil
-		session[:user_tipo] = nil
+		session[:user_id]		= nil
+		session[:user_nome]		= nil
+		session[:user_tipo]		= nil
+		session[:user_link]		= nil
+		session[:user]			= nil
+		session[:logado]		= nil
+		session[:empresa_id]	= nil
+		session[:empresa_nome]	= nil
+		session[:empresa_email]	= nil
+		session[:empresa_cnpj]	= nil
+		session[:user_link]		= nil
+		session[:user]			= nil
+		session[:logado]		= nil
 		redirect_to new_sessions_path
 	end
 
 	def logout
-		session[:user_id] = nil
-		session[:user_nome] = nil
-		session[:user_tipo] = nil
+		session[:user_id]		= nil
+		session[:user_nome]		= nil
+		session[:user_tipo]		= nil
+		session[:user_link]		= nil
+		session[:user]			= nil
+		session[:logado]		= nil
+		session[:empresa_id]	= nil
+		session[:empresa_nome]	= nil
+		session[:empresa_email]	= nil
+		session[:empresa_cnpj]	= nil
+		session[:user_link]		= nil
+		session[:user]			= nil
+		session[:logado]		= nil
 		redirect_to new_sessions_path
 	end
 
