@@ -6,18 +6,19 @@ class FuncionariosController < ApplicationController
     if session[:user]
       if session[:user_tipo] == 1
         @empresas = Empresa.all
+        @funcionarios = Funcionario.all
       else
-        @empresas = Empresa.where(user_id: session[:user_id])  
-      end
-    else
-      @empresas = Empresa.where(empresa_id: session[:empresa_id])      
+        @empresas = Empresa.where(user_id: session[:user_id])
+        @funcionarios = []  
+      end  
     end
 
-    if params[:funcionario]
-      @funcionarios = Funcionario.where(empresa_id: params[:funcionario][:empresa_id])
-    else
-      @funcionarios = []
+    if session[:empresa_id]
+      @empresa = Empresa.where(id: session[:empresa_id]).first
+      @funcionarios = Funcionario.where(empresa_id: session[:empresa_id])    
     end
+
+   
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,11 +31,15 @@ class FuncionariosController < ApplicationController
     if session[:user]
       if session[:user_tipo] == 1
         @empresas = Empresa.all
+        @funcionarios = Funcionario.all
       else
-        @empresas = Empresa.where(user_id: session[:user_id])  
-      end
-    else
-      @empresas = Empresa.where(empresa_id: session[:empresa_id])      
+        @empresas = Empresa.where(user_id: session[:user_id])
+      end  
+    end
+
+    if session[:empresa_id]
+      @empresa = Empresa.where(id: session[:empresa_id]).first
+      @funcionarios = Funcionario.where(empresa_id: session[:empresa_id])    
     end
 
     if params[:funcionario]

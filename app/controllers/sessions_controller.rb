@@ -13,13 +13,19 @@ class SessionsController < ApplicationController
 			if @session.valid?
 				@user = User.login(@session.login, @session.password)
 				if @user
-					session[:user_id]	= @user.id
-					session[:user_nome] = @user.nome
-					session[:user_tipo] = @user.tipo
-					session[:user_link] = @user.link
-					session[:user]		= true
-					session[:logado]	= true
-					redirect_to session[:requested_url] || root_path
+					if @user.status == 1
+						session[:user_id]	= @user.id
+						session[:user_nome] = @user.nome
+						session[:user_tipo] = @user.tipo
+						session[:user_link] = @user.link
+						session[:user]		= true
+						session[:logado]	= true
+						redirect_to session[:requested_url] || root_path
+					elsif @user.status == 0
+						redirect_to new_sessions_path, :notice => "Sua conta foi desabilitada, procure um administrador."
+					else
+						redirect_to new_sessions_path, :notice => "Falha no sistema, procure um administrador."						
+					end
 
 				else
 					@empresa = Empresa.login(@session.login, @session.password)
@@ -32,7 +38,7 @@ class SessionsController < ApplicationController
 						session[:user_link] = @link.link
 						session[:user]			= false
 						session[:logado]		= true
-						redirect_to session[:requested_url] || root_path
+						redirect_to session[:requested_url] || "exames#index"
 					else
 						redirect_to new_sessions_path, :notice => "Falha no login"
 					end

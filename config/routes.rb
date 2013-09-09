@@ -3,6 +3,10 @@ Ansexameonline::Application.routes.draw do
 
   root :to => "page#index"
 
+  match 'users/desabilitar/:id' => 'users#desabilitar', :as => :desabilitar
+  match 'users/habilitar/:id' => 'users#habilitar', :as => :habilitar
+
+
   get "page/index"
   get "page/login"
   get "sessions/logout"

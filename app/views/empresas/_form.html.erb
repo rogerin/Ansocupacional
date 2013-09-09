@@ -1,11 +1,11 @@
 <%= form_for(@empresa, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @empresa.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@empresa.errors.count, "error") %> prohibited this empresa from being saved:</h2>
+      <h2><%= pluralize(@empresa.errors.count, "Error") %> para corrigir::</h2>
 
       <ul>
       <% @empresa.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <li class="text-danger"><%= msg %></li>
       <% end %>
       </ul>
     </div>

@@ -21,9 +21,13 @@
         <td>
           
           <div class="btn-group btn-group-sm">
-            <%= link_to 'Visualizar', categorium, class: "btn btn-default" %> 
-            <%= link_to 'Editar', edit_categorium_path(categorium), class: "btn btn-default" %>
-            <%= link_to 'Deletar', categorium, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>
+            <% if session[:user_tipo] == 1 %>
+                <%= link_to 'Visualizar', categorium, class: "btn btn-default" %> 
+                <%= link_to 'Editar', edit_categorium_path(categorium), class: "btn btn-default" %>
+                <%= link_to 'Deletar', categorium, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>
+            <% else %>
+            <% end %>
+           
           </div>
         </td>
       </tr>

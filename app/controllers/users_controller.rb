@@ -70,6 +70,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def desabilitar
+    User.where(:id => params[:id]).update_all(:status => 0)
+    redirect_to users_path
+  end
+
+  def habilitar
+    User.where(:id => params[:id]).update_all(:status => 1)
+    redirect_to users_path
+  end
+
+  
+
+
+
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy

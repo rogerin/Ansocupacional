@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :login, :nome, :password, :password_confirmation, :password_digest, :tipo, :link
+  attr_accessible :email, :login, :nome, :password, :password_confirmation, :password_digest, :tipo, :link, :status
   has_secure_password
   has_many :empresas
+
+  validates :email, :login, :nome, :password, :password_confirmation, :tipo, presence: true
+  validates :password, confirmation: true
 
 	def self.login(login,password)
 		find_by_login(login).try(:authenticate, password)

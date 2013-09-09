@@ -22,7 +22,7 @@
 	  		<span class="icon-bar"></span>
 		</button>
 		<% if session[:user_link] %>
-			<a href="<%= root_url %>"><img src='<%= root_url %>clinica/<%= session[:user_link] %>' width="140"  class: "navbar-brand logomarca" /></a>
+			<a href="<%= root_url %>"><img src='<%= root_url %>clinica/<%= session[:user_link] %>' width="140"  class= " logomarca" /></a>
 		<% end %>
 
 	  </div>
@@ -106,11 +106,11 @@
 			  </li>
 		</ul>
 		
-		<p class="navbar-text pull-right">Clínica 
+		<p class="navbar-text pull-right"> 
 			<% if session[:user] %>
-				<%= session[:user_nome]%>
+				Clínica <%= session[:user_nome]%>
 			<% else %>
-				<%= session[:empresa_nome]%>
+				Empresa <%= session[:empresa_nome]%>
 			<% end %>
 			, <%= link_to 'Logout', sessions_logout_path%>
 		</p>
@@ -134,7 +134,7 @@
 <footer class="footer">
   <div class="container">
 	<p>
-		Desenvolvido por <a href="http://satecnologia.com.br">Rogerio Alencar Filho</a>.
+		Desenvolvido por <a href="http://www.analisesistemas.com">ANS Sistemas</a>. A<small>poio: <a href="http://www.twitter.com/rogerin">Rogerio Alencar Filho</a>.</small>
 	</p>
   </div>
 </footer>

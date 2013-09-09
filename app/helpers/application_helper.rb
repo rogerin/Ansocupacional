@@ -25,4 +25,8 @@ module ApplicationHelper
   		"indefinido"
   	end
   end
+
+  def busca_clinica(id)
+    User.where(:id => id).last
+  end
 end

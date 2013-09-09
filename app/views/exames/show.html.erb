@@ -1,5 +1,9 @@
-<p id="notice"><%= notice %></p>
+<h2>Exame</h2>
+<p>
+<%= link_to 'Editar', edit_exame_path(@exame), class: 'btn btn-xs btn-default' %> 
+<%= link_to 'Listar Exames', exames_path, class: 'btn btn-xs btn-default' %>
 
+</p>
 <p>
   <b>Link:</b>
   <%= @exame.link %>
@@ -23,5 +27,3 @@
 
 
 
-<%= link_to 'Edit', edit_exame_path(@exame) %> |
-<%= link_to 'Back', exames_path %>

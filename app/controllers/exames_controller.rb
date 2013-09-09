@@ -46,28 +46,59 @@ class ExamesController < ApplicationController
     @por_inicio = []
     @por_funcionarios = []
 
+    if session[:user]
+      @empresas_ids = Empresa.where(:user_id => session[:user_id])
+      @ids_empresas = []
+      @empresas_ids.each do |emp|
+        @ids_empresas << emp.id
+      end
+    else
+      @empresas_ids = Empresa.where(:user_id => session[:empresa_id])
+      @ids_empresas = []
+      @empresas_ids.each do |emp|
+        @ids_empresas << emp.id
+      end
+    end
+
     
 
-     if params[:busca][:nome].present?
+   if params[:busca][:nome].present?
 
-      @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
-       @ids = []
+    @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
+    
+
+
+      @ids = []
       @funcionarios_ids.each do |func|
         @ids << func.id
       end
-      @por_funcionarios = Exame.where(:funcionario_id => @ids)
-
-
-    end
+    @por_funcionarios = Exame.where(:funcionario_id => @ids, :empresa_id => @empresas_ids)
+  end
 
     if params[:busca][:categoria_id].present?
-      @por_categoria =  Exame.where(categoria_id: params[:busca][:categoria_id])
+      
+
+      @por_categoria =  Exame.where(categoria_id: params[:busca][:categoria_id],empresa_id: @ids_empresas)
     end
+    
     if params[:busca][:empresa_id].present?
       @por_empresa =  Exame.where(empresa_id: params[:busca][:empresa_id])
     end
+    
     if params[:busca][:data_inicio].present?
-      @por_inicio =  Exame.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+        if params[:busca][:empresa_id].present?
+           @por_inicio =  Exame.where(:empresa_id => params[:busca][:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+        else
+          if session[:user_tipo] == 1
+            @por_inicio =  Exame.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+          elsif session[:user_tipo] == 2
+            @por_inicio =  Exame.where(:empresa_id => @ids_empresas,:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+          else
+            @por_inicio =  Exame.where(:empresa_id => session[:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+
+          end
+              
+        end
     end
 
     @exames = @por_categoria+@por_empresa+@por_inicio+@por_funcionarios

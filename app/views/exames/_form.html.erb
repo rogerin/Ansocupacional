@@ -12,14 +12,6 @@
   <% end %>
 
 
-  <div class="form-group">
-    <label class="col-lg-2 control-label">Arquivo</label>
-    <div class="col-lg-4">
-      <%= f.file_field :link, class: 'form-control' %>
-    </div>
-  </div>
-
-
   <% 
    if @empresa
    %>
@@ -44,12 +36,71 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <label class="col-lg-2 control-label">Categoria</label>
-    <div class="col-lg-4">
-      <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control'}) %>
-    </div>
-  </div>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="col-lg-2"></th>
+      <th>Exames</th>
+      <th></th>
+    <tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control' %> <br />
+          <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control' } )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+<!--
+      <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control', :multiple => true, :name => 'exames[link][]'  %> <br />
+          <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :name => 'exame[categoria_ids][]'} )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+
+      <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control', :multiple => true, :name => 'exames[link][]'  %> <br />
+          <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :name => 'exame[categoria_ids][]'} )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+
+      <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control', :multiple => true, :name => 'exames[link][]'  %> <br />
+          <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :name => 'exame[categoria_ids][]'} )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+
+      <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control', :multiple => true, :name => 'exames[link][]'  %> <br />
+          <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :name => 'exame[categoria_ids][]'} )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+
+      <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control', :multiple => true, :name => 'exames[link][]'  %> <br />
+          <%= collection_select(:exame, :categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :name => 'exame[categoria_ids][]'} )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+-->
+  </tbody>
+  </table>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-2">
@@ -60,6 +111,7 @@
 
 <% end %>
 <script type="text/javascript">
+
 
 $("#exame_empresa_id").change(function(){
     var empresa_id = $(this).val();

@@ -26,9 +26,19 @@
         <td></td>
         <td>
             <div class="btn-group btn-group-sm">
+              <% if session[:user_tipo] == 1 %>
                 <%= link_to 'Visualizar', user, class: 'btn btn-default' %>
                 <%= link_to 'Editar', edit_user_path(user), class: 'btn btn-default' %>
-                <%= link_to 'Deletar', user, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: 'btn btn-default' %>
+                <% if user.status == 1 %>
+                  <%= link_to 'Desabilitar', desabilitar_path(user), class: 'btn btn-danger' %>
+                <% else %>
+                  <%= link_to 'Habilitar', habilitar_path(user), class: 'btn btn-success' %>
+                <% end %>
+                <!--<%= link_to 'Deletar', user, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: 'btn btn-default' %>-->
+              <% else %>
+                <%= link_to 'Visualizar', user, class: 'btn btn-default' %>
+                <%= link_to 'Editar', edit_user_path(user), class: 'btn btn-default' %>
+              <% end %>
             </div>
         </td>
       </tr>

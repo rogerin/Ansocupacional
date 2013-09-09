@@ -16,4 +16,6 @@ class ApplicationController < ActionController::Base
   def esta_logado?
   	!session[:logado].nil?
   end
+
+
 end

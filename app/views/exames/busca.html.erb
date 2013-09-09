@@ -24,7 +24,9 @@
       <th>Link</th>
       <th>Categoria</th>
       <th>Empresa</th>
+      <th>Clinica</th>      
       <th>Atualização</th>
+
       <th></th>
     </tr>
   </thead>
@@ -36,17 +38,21 @@
         <td><%= exame.funcionario.nome %></td>
         <td><%= link_to exame.link, "#{root_url}data/#{exame.link}" %></td>
         <td><%= exame.categoria.nome %></td>
-        <td><%= exame.empresa.nome %></td>
+        <td><%= exame.empresa.nome %> </td>
+        <td><%= exame.empresa.user.nome %></td>
+
         <td><%= exame.created_at.strftime("%d/%m/%Y") %></td>
         <td>
           <div class="btn-group btn-group-sm">
-            <% if session[:empresa_id] %>
+            <% if session[:user_tipo] == 1 %>
               <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "data/#{exame.link}", class: "btn btn-default" %>
-            <% else %>
               <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{root_url}data/#{exame.link}", class: "btn btn-default" %>
               <%= link_to 'Visualizar', exame, class: "btn btn-default" %>
               <%= link_to 'Editar', edit_exame_path(exame), class: "btn btn-default" %>
               <%= link_to 'Deletar', exame, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>
+            <% else %>
+              <%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "data/#{exame.link}", class: "btn btn- default" %>
+
             <% end %>
           </div>
         </td>

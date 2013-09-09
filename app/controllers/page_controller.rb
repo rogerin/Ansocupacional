@@ -6,19 +6,18 @@ class PageController < ApplicationController
         @empresas = Empresa.count
         @funcionarios = Funcionario.count
         @exames = Exame.count
-      else
+      elsif session[:user_tipo] == 2
         @empresas = Empresa.where(user_id: session[:user_id]).count
+      else
       end
-  		@usuarios = User.count
-	  	@empresas = Empresa.count
-	  	@funcionarios = Funcionario.count
-	  	@exames = Exame.count
-	  	@categorias = Categoria.count
-  	else
-	  	@funcionarios = Funcionario.where(:empresa_id => session[:empresa_id]).count
-	  	@exames = Exame.count
-	  	@categorias = Categoria.count
   	end
+
+    if session[:empresa_id]
+      @funcionarios = Funcionario.where(:empresa_id => session[:empresa_id]).count
+      @exames = Exame.where(:empresa_id => session[:empresa_id]).count 
+    end
+
+    @categorias = Categoria.count
   end
 
   def login

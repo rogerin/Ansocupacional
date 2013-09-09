@@ -1,7 +1,12 @@
 <h2>Clínica</h2>
 <p>
-  <%= link_to 'Editar', edit_user_path(@user), class: 'btn btn-xs btn-default' %>
-  <%= link_to 'Listar Clínicas', users_path, class: 'btn btn-xs btn-default' %>
+  <% if session[:user_tipo] == 1 %>
+    <%= link_to 'Editar', edit_user_path(@user), class: 'btn btn-xs btn-default' %>
+    <%= link_to 'Listar Clínicas', users_path, class: 'btn btn-xs btn-default' %>
+
+  <% else %>
+    <%= link_to 'Listar Clínicas', users_path, class: 'btn btn-xs btn-default' %>
+  <% end %>
 </p>
 <p>
   <b>Nome:</b>
