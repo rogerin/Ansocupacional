@@ -1,11 +1,13 @@
+<script type="text/javascript" src="<%= root_url %>js/jquery.validate.min.js"></script>
+
 <%= form_for(@funcionario, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @funcionario.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@funcionario.errors.count, "error") %> prohibited this funcionario from being saved:</h2>
+      <h2><%= pluralize(@funcionario.errors.count, "error") %> para corrigir:</h2>
 
       <ul>
       <% @funcionario.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <li  class="text-danger"><%= msg %></li>
       <% end %>
       </ul>
     </div>
@@ -14,21 +16,21 @@
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :nome %></label>
     <div class="col-lg-4">
-      <%= f.text_field :nome, class: 'form-control' %>
+      <%= f.text_field :nome, class: 'form-control',:required => true %>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :rg %></label>
     <div class="col-lg-4">
-      <%= f.text_field :rg, class: 'form-control' %>
+      <%= f.text_field :rg, class: 'form-control',:required => true %> <br/>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :empresa_id %></label>
     <div class="col-lg-4">
-      <%= collection_select(:funcionario, :empresa_id, @empresas, :id, :nome, {:prompt => 'Selecione a empresa que ele trabalha.'}, {:class=>'form-control'}) %>
+      <%= f.collection_select(:empresa_id, @empresas, :id, :nome, {:prompt => 'Selecione a empresa que ele trabalha.'}, {:class=>'form-control',:required => true}) %>
     </div>
   </div>
 
@@ -38,3 +40,25 @@
     </div>
   </div>
 <% end %>
+<script type="text/javascript">
+
+$(function(){
+  $("#new_funcionario").validate({
+      rules: {
+        funcionario_nome: "required",
+        funcionario_rg: "required",
+        funcionario_empresa_id: "required"
+      },
+      messages: {
+        funcionario_nome: "Entre com o nome do funcionario.",
+        funcionario_rg: "Entre com o RG do funcionario",
+        funcionario_empresa_id: "Selecione a empresa"
+      }
+    });
+
+  $("#new_funcionario").removeAttr("novalidate");
+
+
+  
+});
+</script>

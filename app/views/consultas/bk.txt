@@ -1,0 +1,4 @@
+     <!--<%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{root_url}data/#{exame.link}", class: "btn btn-default" %>
+              <%= link_to 'Visualizar', exame, class: "btn btn-default" %>
+              <%= link_to 'Editar', edit_exame_path(exame), class: "btn btn-default" %>
+              <%= link_to 'Deletar', exame, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>-->

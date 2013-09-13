@@ -96,10 +96,10 @@
 			  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Exames <b class="caret"></b></a>
 			  	<ul class="dropdown-menu">
 			  	  <% if session[:empresa_id] %>
-			  	  	<li> <%= link_to "Listar", exames_path %> </li>
+			  	  	<li> <%= link_to "Listar", consultas_path %> </li>
 			  	  <% else %>
-			  	  	<li> <%= link_to "Listar", exames_path %> </li>
-					<li> <%= link_to "Enviar Exame", new_exame_path %> </li>
+			  	  	<li> <%= link_to "Listar", consultas_path %> </li>
+					<li> <%= link_to "Enviar Exame", new_consulta_path %> </li>
 			  	  <% end %>
 			  	  
 				</ul>

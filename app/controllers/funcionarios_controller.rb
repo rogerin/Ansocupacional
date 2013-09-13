@@ -1,3 +1,4 @@
+#encoding: utf-8
 class FuncionariosController < ApplicationController
   # GET /funcionarios
   # GET /funcionarios.json
@@ -73,8 +74,13 @@ class FuncionariosController < ApplicationController
   # GET /funcionarios/new.json
   def new
     @funcionario = Funcionario.new
-    @empresas = Empresa.where(:user_id => session["user_id"])
-
+    if session[:user]
+      if session[:user_tipo] == 1
+        @empresas = Empresa.all
+      else
+        @empresas = Empresa.where(user_id: session[:user_id])
+      end  
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @funcionario }
@@ -90,17 +96,19 @@ class FuncionariosController < ApplicationController
   # POST /funcionarios
   # POST /funcionarios.json
   def create
-    @funcionario = Funcionario.new(params[:funcionario])
+   @funcionario = Funcionario.new(params[:funcionario])
 
     respond_to do |format|
       if @funcionario.save
         format.html { redirect_to @funcionario, flash: { success: 'Funcionario criado com sucesso.' } }
         format.json { render json: @funcionario, status: :created, location: @funcionario }
       else
-        format.html { render action: "new" }
+        format.html { render new_funcionario_path }
         format.json { render json: @funcionario.errors, status: :unprocessable_entity }
       end
     end
+
+
   end
 
   # PUT /funcionarios/1
@@ -130,4 +138,6 @@ class FuncionariosController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  
 end

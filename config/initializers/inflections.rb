@@ -15,4 +15,6 @@
 # end
 ActiveSupport::Inflector.inflections do |inflect|
 	inflect.irregular 'categoria', 'categorias'
+	inflect.irregular 'consulta', 'consultas'
+
 end

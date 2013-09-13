@@ -1,11 +1,11 @@
 <%= form_for(@categoria, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @categoria.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@categoria.errors.count, "error") %> prohibited this categorium from being saved:</h2>
+      <h2><%= pluralize(@categoria.errors.count, "error") %> para corrigir:</h2>
 
       <ul>
       <% @categoria.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <li class="text-danger"><%= msg %></li>
       <% end %>
       </ul>
     </div>

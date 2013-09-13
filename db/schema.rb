@@ -11,18 +11,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130909063346) do
+ActiveRecord::Schema.define(:version => 20130912233449) do
 
-  create_table "categoria", :force => true do |t|
-    t.string   "nome"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "assets", :force => true do |t|
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
+    t.integer  "consulta_id"
+    t.integer  "categoria_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
+
 
   create_table "categorias", :force => true do |t|
     t.string   "nome"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "consultas", :force => true do |t|
+    t.integer  "funcionario_id"
+    t.integer  "empresa_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "eexames", :force => true do |t|
+    t.integer  "categoria_id"
+    t.integer  "funcinonario_id"
+    t.integer  "empresa_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
   end
 
   create_table "empresas", :force => true do |t|
@@ -40,9 +65,13 @@ ActiveRecord::Schema.define(:version => 20130909063346) do
     t.string   "link"
     t.integer  "categoria_id"
     t.integer  "funcionario_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "empresa_id"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
   end
 
   create_table "funcionarios", :force => true do |t|
@@ -51,6 +80,16 @@ ActiveRecord::Schema.define(:version => 20130909063346) do
     t.integer  "empresa_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "produtos", :force => true do |t|
+    t.string   "nome"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
   end
 
   create_table "users", :force => true do |t|

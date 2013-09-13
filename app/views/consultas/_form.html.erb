@@ -1,0 +1,102 @@
+<%= form_for(@consulta, :multipart => true, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @consulta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@consulta.errors.count, "error") %> para corrigir:</h2>
+
+      <ul>
+      <% @consulta.errors.full_messages.each do |msg| %>
+        <li class="text-danger"><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Empresa</label>
+      <div class="col-lg-4">
+        <%= f.collection_select :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa'}, {:id => 'exame_empresa_id', :class=>'form-control', :allow_blank => true,:required => true } %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Funcionário</label>
+      <div class="col-lg-4">
+        <%= f.collection_select :funcionario_id, @funcionarios, :id, :nome, {:prompt => 'Selecione a empresa'}, {:class=>'funcionarios form-control', :allow_blank => true,:required => true } %>
+      </div>
+    </div>
+    <hr/ >
+
+
+
+<%= f.fields_for :assets do |u| %>
+  <div class="row">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-3">
+      <%= u.file_field :asset, :allow_blank => true, class: 'form-control',:multipart => true  %>
+    </div>
+    <div class="col-lg-3">
+      <%= u.collection_select :categoria_id, Categoria.all, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :allow_blank => true,:multipart => true  } %>
+    </div>
+    <div class="col-lg-4">
+
+    </div>
+    
+  </div> <hr/>
+<% end %>
+
+
+
+
+
+
+ 
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-2">
+      <%= f.submit 'Salvar', class: 'btn btn-success' %>
+    </div>
+  </div>
+
+
+<% end %>
+<script type="text/javascript">
+
+$('#enviar_outro').click(function(){
+  console.log("outro");
+  return false;
+})
+
+
+$("#exame_empresa_id").change(function(){
+    var empresa_id = $(this).val();
+    //console.log(empresa_id);
+    $.ajax({ 
+      url: "<%= javascripts_funcionarios_dinamicos_path %>",
+      type: "POST", 
+      data: { 'empresa_id': empresa_id},
+      beforeSend: function(){
+       $('.funcionarios').html("<option>Carregando Funcionários....</option>"); 
+      },
+      success: function(data)   //here is object
+      {
+        $('.funcionarios').empty();
+        var result = JSON.parse(data);
+        $.each(result , function(k, item) { 
+          $('.funcionarios')
+            .append($("<option></option>")
+            .attr("value", item.id)
+            .text(item.nome));
+        });
+      },
+      error: function(){
+        alert("Ocorreu um ERRO no carregamento do AJAX, entre em contato com o desenvolvedor.");
+      },
+      dataType : "html"
+    });      
+  });
+
+</script>
+

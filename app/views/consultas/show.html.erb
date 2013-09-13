@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<p>
+<%= link_to 'Listar Exames', consultas_path, class: 'btn btn-xs btn-default' %>
+</p>
+<p>
+  <b>Categoria:</b> <br/>
+
+	<% for asset in @consulta.assets 
+		if asset.asset.url == '/assets/original/missing.png'
+        else
+    %>
+    		<%= link_to asset.asset.url, asset.asset.url %><br/>
+    		<%= asset.categoria.nome %> <hr/>
+    	<% end %>
+	<% end %>
+</p>
+
+<p>
+  <b>Funcionario:</b>
+  <%= @consulta.funcionario.nome %>
+</p>
+
+<p>
+  <b>Empresa:</b>
+  <%= @consulta.empresa.nome %>
+</p>

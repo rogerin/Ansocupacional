@@ -40,7 +40,13 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    post = User.save(params[:user][:link])
+    if params[:user][:link]
+       post = User.save(params[:user][:link])
+    else
+      post = 'ans.png'
+    end
+    
+  
     @user = User.new(link: post, email: params[:user][:email], login: params[:user][:login], nome: params[:user][:nome], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation], tipo: params[:user][:tipo])
 
     respond_to do |format|

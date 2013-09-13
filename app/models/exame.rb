@@ -1,10 +1,14 @@
 class Exame < ActiveRecord::Base
-  attr_accessible :categoria_id, :funcionario_id, :empresa_id, :link
+  attr_accessible :categoria_id, :funcionario_id, :empresa_id, :link, :pdf
   belongs_to :funcionario
   belongs_to :categoria
   belongs_to :empresa
 
-  validates :categoria_id, :funcionario_id, :empresa_id, :link, presence: true
+  has_many :pdfs
+
+  has_attached_file :pdf
+
+  validates :categoria_id, :funcionario_id, :empresa_id,  presence: true
  
 
 

@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-lg-2">
+    <h2>Exames</h2>
+    <p>
+      <% if session[:empresa_id] %>
+      <% else %>
+        <%= link_to 'Enviar Exame', new_consulta_path, class: 'btn btn-sm btn-default' %>
+      <% end %>
+    </p>
+  </div>
+  <div class="col-lg-10">
+    <h2>Busca</h2>
+    <%= render 'form_busca' %>
+  </div>
+</div>
+
+<br/>
+<div class="row">
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Funcionario</th>
+      <th>Empresa</th>
+      <th>Clinica</th>
+      <th>Atualização</th>      
+      <th>Exames</th>
+
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% @consulta.each do |exame| %>
+      <tr>
+        <td><%= exame.funcionario.nome %></td>
+        <td><%= exame.empresa.nome %> </td>
+        <td><%= exame.empresa.user.nome %></td>
+        <td><%= exame.created_at.strftime("%d/%m/%Y") %></td>
+        <td>
+          <table class="table table-hover">
+            
+        	<% for asset in exame.assets 
+		        if asset.asset.url == '/assets/original/missing.png'
+		        else
+		        %>
+              <tr>
+                <td class="col-lg-8"><%= link_to asset.asset_file_name, asset.asset.url, :target => "_blank" %></td>
+                <td class="col-lg-2"><%= asset.categoria.nome %></td>
+                <td class="col-lg-2"><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{asset.asset.url}", class: "btn btn-default", :target => "_blank" %></td>
+              </tr>
+            
+		        <% end %> 
+		  	<% end %>
+        </table>
+
+
+
+        </td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+
+</div>
+</div>
+<br />
+
+

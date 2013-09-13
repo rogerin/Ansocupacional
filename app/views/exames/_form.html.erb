@@ -1,51 +1,61 @@
 <%= form_for(@exame, :multipart => true, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @exame.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@exame.errors.count, "error") %> prohibited this exame from being saved:</h2>
+      <h2><%= pluralize(@exame.errors.count, "error") %> para corrigir:</h2>
 
       <ul>
       <% @exame.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <li class="text-danger"><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
 
-  <% 
-   if @empresa
-   %>
-    <%= hidden_field :empresa_id, :value => session["empresa_id"] %>
-   <%
-   else
-   %>
+
     <div class="form-group">
       <label class="col-lg-2 control-label">Empresa</label>
       <div class="col-lg-4">
-        <%= collection_select(:exame, :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa'}, {:class=>'form-control'}) %>
+        <%= f.collection_select :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa'}, {:id => 'exame_empresa_id', :class=>'form-control', :allow_blank => true } %>
       </div>
     </div>
-   <% end %>
 
-
-
-  <div class="form-group">
-    <label class="col-lg-2 control-label">Funcionário</label>
-    <div class="col-lg-4">
-      <%= collection_select(:exame, :funcionario_id, @funcionarios, :id, :nome, {:prompt => 'Selecione a empresa'}, {:class=>'form-control funcionarios', :id => ''}) %>
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Funcionário</label>
+      <div class="col-lg-4">
+        <%= f.collection_select :funcionario_id, @funcionarios, :id, :nome, {:prompt => 'Selecione a empresa'}, {:class=>'funcionarios form-control', :allow_blank => true } %>
+      </div>
     </div>
-  </div>
 
+    <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :link, class: 'form-control' %> <br />
+          <%= f.collection_select(:categoria_id, @categorias, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control' } )  %>
+        </td>
+        <td class="col-lg-6"></td>
+      </tr>
+
+
+   <%= f.file_field :pdf %> <br />
+<!--
   <table class="table table-striped">
   <thead>
     <tr>
       <th class="col-lg-2"></th>
-      <th>Exames</th>
+      <th>Exames  <small>( <a href="#" id="enviar_outro">enviar outro</a> )</small></th>
       <th></th>
     <tr>
   </thead>
   <tbody>
       <tr>
+        <td class="col-lg-2"></td>
+        <td class="col-lg-4">
+          <%= f.file_field :pdf %> <br />
+         
+        </td>
+        <td class="col-lg-6"></td>
+      </tr><tr>
         <td class="col-lg-2"></td>
         <td class="col-lg-4">
           <%= f.file_field :link, class: 'form-control' %> <br />
@@ -111,6 +121,11 @@
 
 <% end %>
 <script type="text/javascript">
+
+$('#enviar_outro').click(function(){
+  console.log("outro");
+  return false;
+})
 
 
 $("#exame_empresa_id").change(function(){

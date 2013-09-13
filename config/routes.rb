@@ -1,6 +1,5 @@
 Ansexameonline::Application.routes.draw do
 
-
   root :to => "page#index"
 
   match 'users/desabilitar/:id' => 'users#desabilitar', :as => :desabilitar
@@ -14,17 +13,25 @@ Ansexameonline::Application.routes.draw do
 
   post "exames/busca"
   get "exames/busca"
+  
+  post "consultas/busca"
+  get "consultas/busca"
+
+  
   post "funcionarios/busca"
   get "funcionarios/busca"
   
 
   post "javascripts/funcionarios_dinamicos"
+  post "javascripts/valida_funcionario_rg"
+
   resource :sessions
   resources :exames
   resources :funcionarios
   resources :empresas
   resources :users
   resources :categorias
+  resources :consultas
 
 
   # The priority is based upon order of creation:
