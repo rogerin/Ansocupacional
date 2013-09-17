@@ -8,9 +8,9 @@
   <div class="panel-heading">Exames</div>
   <div class="panel-body">
       <b>Funcionario:</b>
-      <%= link_to @consulta.funcionario.nome, funcionarios_path(@consulta.funcionario_id) %> <br/>
+      <%= @consulta.funcionario.nome %> <br/>
        <b>Empresa:</b>
-      <%= link_to @consulta.empresa.nome, empresa_path(@consulta.empresa_id) %>
+      <%= @consulta.empresa.nome %>
   </div>
 
 
