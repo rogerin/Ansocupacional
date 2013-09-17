@@ -51,11 +51,12 @@ class ConsultasController < ApplicationController
         @empresas = Empresa.all
       elsif session[:user_tipo] == 2
         @empresas = Empresa.where(:user_id => session[:user_id])
+        @consultas = Consulta.find(:all, :conditions => ['empresa_id = ?', @empresas])
+        scope = scope.where(:consulta_id => @consultas)
       end
     else
       @empresa = true
       @empresas   = Empresa.where(:id => session[:empresa_id] )
-
     end
 
     if (params[:busca][:nome].present?)
@@ -74,6 +75,7 @@ class ConsultasController < ApplicationController
       @consultas = Consulta.find(:all, :conditions => ['empresa_id = ?', params[:busca][:empresa_id]])
       scope = scope.where(:consulta_id => @consultas)
     end
+
 
     @arquivos = scope.includes(consulta: [:funcionario, :empresa]).all
     @categorias = Categoria.all
