@@ -143,34 +143,11 @@ $('#formulario').submit(function(){
   }
 });
 
-$("#exame_empresa_id").change(function(){
-    var empresa_id = $(this).val();
+$("#lista_empresa").change(function(){
+    
     $("#list_funcionarios").html('');
     $("#busca_funcionario").val('');
-    //console.log(empresa_id);
-    $.ajax({ 
-      url: "<%= javascripts_funcionarios_dinamicos_path %>",
-      type: "POST", 
-      data: { 'empresa_id': empresa_id},
-      beforeSend: function(){
-       $('.funcionarios').html("<option>Carregando Funcionários....</option>"); 
-      },
-      success: function(data)   //here is object
-      {
-        $('.funcionarios').empty();
-        var result = JSON.parse(data);
-        $.each(result , function(k, item) { 
-          $('.funcionarios')
-            .append($("<option></option>")
-            .attr("value", item.id)
-            .text(item.nome));
-        });
-      },
-      error: function(){
-        alert("Ocorreu um ERRO no carregamento do AJAX, entre em contato com o desenvolvedor.");
-      },
-      dataType : "html"
-    });      
+    //console.log(empresa_id);      
   });
 
 
