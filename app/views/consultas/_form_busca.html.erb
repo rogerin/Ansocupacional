@@ -3,30 +3,35 @@
 
 <div class="row">
 	<%= form_tag consultas_busca_url, :class => 'form-inline' do %>
-		 <div class="form-group">
+		 <div class="form-group col-md-2">
+		 	  <label>Nome ou RG: </label>
 		      <%= text_field :busca, :nome, class: 'form-control', :placeholder => "Nome ou RG", allow_blank: true %>
 		 </div>
 		 
 			 <% if @empresa %>
 			 	<%= hidden_field :busca, :empresa_id, :value => session["empresa_id"] %>
 			 <% else %>
-			 	<div class="form-group">
+			 	<div class="form-group  col-md-2">
+			 		<label>Empresa: </label>
 					<%= collection_select(:busca, :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa...'}, {:class=>'form-control'}) %>
 				</div>
 		 	<% end %>
-
-		 <div class="form-group">
+		 <div class="form-group  col-md-2">
+		 	<label>Data Inicio: </label>
 			<%= text_field :busca, :data_inicio, class: 'form-control', :placeholder => "data inicio", id: "dpd1", allow_blank: true %>
 		</div>
-		<div class="form-group">
-			<%= text_field :busca, :data_fim, class: 'form-control', :placeholder => "data inicio", id: "dpd2", allow_blank: true %>
+		<div class="form-group  col-md-2">
+			<label>Data Fim: </label>
+			<%= text_field :busca, :data_fim, class: 'form-control', :placeholder => "data fim", id: "dpd2", allow_blank: true %>
 		</div>
-		<!--
-		<div class="form-group">
-			<%= collection_select(:busca, :categoria_id, @categorias, :id, :nome, {:prompt => 'Categoria...'}, {:class=>'form-control'}) %>
+		
+		<div class="form-group  col-md-2">
+			<label>Tipo Exame: </label>
+			<%= collection_select(:busca, :categoria_id, @categorias, :id, :nome, {:prompt => 'Tipo Exame...'}, {:class=>'form-control'}) %>
 		</div>
-	-->
-		<div class="form-group">
+	
+		<div class="form-group  col-md-2">
+			<br />
 			<%= submit_tag 'Buscar', :class => 'btn btn-default' %>
 		</div>
 	<% end -%>
@@ -52,7 +57,7 @@ var checkin = $('#dpd1').datepicker({
 var checkout = $('#dpd2').datepicker({
 	format: 'dd-mm-yyyy',
   onRender: function(date) {
-    return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+    return checkin.date.valueOf();
   }
 }).on('changeDate', function(ev) {
   checkout.hide();

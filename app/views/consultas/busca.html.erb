@@ -9,63 +9,64 @@
     </p>
   </div>
   <div class="col-lg-10">
-    <h2>Busca</h2>
+  
     <%= render 'form_busca' %>
   </div>
 </div>
 
 <br/>
 <div class="row">
-
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Funcionario</th>
-      <th>Empresa</th>
-      <th>Clinica</th>
-      <th>Atualização</th>      
-      <th>Exames</th>
-
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-    <% @consulta.each do |exame| %>
-      <tr>
-        <td><%= exame.funcionario.nome %></td>
-        <td><%= exame.empresa.nome %> </td>
-        <td><%= exame.empresa.user.nome %></td>
-        <td><%= exame.created_at.strftime("%d/%m/%Y") %></td>
-        <td>
-          <table class="table table-hover">
-            
-        	<% for asset in exame.assets 
-		        if asset.asset.url == '/assets/original/missing.png'
-		        else
-		        %>
+  <% if @arquivos.count == 0 %>
+    <div class="alert alert-info" > <strong><h3>Nenhum registro retornado, faça uma busca.</h3></strong></div>
+  <% else %>
+  
+    <table class="table table-condensed table-hover table-bordered">
+        <thead>
+          <tr>
+            <th><input type="checkbox" class="toll"></th>
+            <th>id</th>
+            <th>Funcionario</th>
+            <th>Matricula</th>
+            <th>RG</th>
+            <% if !@empresa %>
+              <th>Clinica</th>
+              <th>Empresa</th>
+            <% end %>
+            <th>Tipo Exame</th>
+            <th>Data</th>
+            <th>-</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @arquivos.each do |arquivo| %>
               <tr>
-                <td class="col-lg-8"><%= link_to asset.asset_file_name, asset.asset.url, :target => "_blank" %></td>
-                <td class="col-lg-2"><%= asset.categoria.nome %></td>
-                <td class="col-lg-2"><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{asset.asset.url}", class: "btn btn-default", :target => "_blank" %></td>
+                <td><input type="checkbox" class="toll"></td>
+                <td><%= arquivo.id %></td>
+                <td><%= arquivo.consulta.funcionario.nome %> </td>
+                <td><%= arquivo.consulta.funcionario.matricula %></td>
+                <td><%= arquivo.consulta.funcionario.rg %></td>
+                 <% if !@empresa %>
+                  <td><%= arquivo.consulta.empresa.user.nome %></td>
+                  <td><%= arquivo.consulta.empresa.nome %></td>
+                <% end %>
+                <td><%= arquivo.categoria.nome %></td>
+                <td><%= arquivo.data.strftime("%d/%m/%Y") %></td>
+                <td><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{arquivo.asset.url}", class: "btn btn-default btn-xs", :target => "_blank" %></td>
               </tr>
-            
-		        <% end %> 
-		  	<% end %>
-        </table>
-
-
-
-        </td>
-        
-      </tr>
-    <% end %>
-  </tbody>
-  </table>
-
+          <% end %>
+     </tbody>
+      </table>
+      <% end %>
 </div>
-</div>
+
 <br />
+<script type="text/javascript">
 
+$('.toll').popover({
+  selector: true,
+  trigger: 'hover',
+  title: 'Aviso Importante!',
+  content: 'Essa função ainda está em desenvolvimento, aguarde versão 2.0.'
+})
 
+</script>

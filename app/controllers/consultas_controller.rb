@@ -39,178 +39,49 @@ class ConsultasController < ApplicationController
     end
   end
 
-  # POST / exames/busca
+
+
   def busca
     
-    @por_empresa = []
-    @por_inicio = []
-    @por_funcionarios = []
-
-    if session[:user] == 1
-      @empresas_ids = Empresa.all
-      @ids_empresas = []
-      @empresas_ids.each do |emp|
-        @ids_empresas << emp.id
-      end
-    elsif session[:user] == 2
-      @empresas_ids = Empresa.where(:user_id => session[:user_id])
-      @ids_empresas = []
-      @empresas_ids.each do |emp|
-        @ids_empresas << emp.id
-      end
-
-    else
-      @empresas_ids = Empresa.where(:user_id => session[:empresa_id])
-      @ids_empresas = []
-      @empresas_ids.each do |emp|
-        @ids_empresas << emp.id
-      end
-    end
-
-    
-
-   if params[:busca][:nome].present?
-
-    @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
-    
-      @ids = []
-      @funcionarios_ids.each do |func|
-        @ids << func.id
-      end
-    @por_funcionarios = Consulta.where(:funcionario_id => @ids, :empresa_id => @empresas_ids)
-  end
-
-    if params[:busca][:categoria_id].present?
-      
-
-      @por_categoria =  Consulta.where(categoria_id: params[:busca][:categoria_id],empresa_id: @ids_empresas)
-    end
-    
-    if params[:busca][:empresa_id].present?
-      @por_empresa =  Consulta.where(empresa_id: params[:busca][:empresa_id])
-    end
-    
-    if params[:busca][:data_inicio].present?
-        if params[:busca][:empresa_id].present?
-           @por_inicio =  Consulta.where(:empresa_id => params[:busca][:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-        else
-          if session[:user_tipo] == 1
-            @por_inicio =  Consulta.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-          elsif session[:user_tipo] == 2
-            @por_inicio =  Consulta.where(:empresa_id => @ids_empresas,:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-          else
-            @por_inicio =  Consulta.where(:empresa_id => session[:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-
-          end
-              
-        end
-    end
-
-    @exames = @por_empresa+@por_inicio+@por_funcionarios
-
-
-    
-    if session[:empresa_id]
-      @funcionarios = Funcionario.order('nome').where(empresa_id: session[:empresa_id])
-      @empresas = Empresa.order('nome').where(id: session[:empresa_id])
-      @empresa = true
-    else
-      if session[:user]
-        if session[:user_tipo] == 1
-          @empresas = Empresa.order('nome').all    
-        else
-          @empresas = Empresa.order('nome').where(user_id: session[:user_id])  
-        end
-      end
-    end
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @consultas }
-    end
-  end
-
-  def busca
-    @por_categoria = []
-    @por_empresa = []
-    @por_inicio = []
-    @por_funcionarios = []
-
+    scope = Asset
 
     if session[:user]
-      @empresas_ids = Empresa.where(:user_id => session[:user_id])
-      @ids_empresas = []
-      @empresas_ids.each do |emp|
-        @ids_empresas << emp.id
-      end
-    else
-      @empresas_ids = Empresa.where(:user_id => session[:empresa_id])
-      @ids_empresas = []
-      @empresas_ids.each do |emp|
-        @ids_empresas << emp.id
-      end
-    end
-
-
-    
-
-   if params[:busca][:nome]
-
-    @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
-
-      @ids = []
-      @funcionarios_ids.each do |func|
-        @ids << func.id
-      end
-    @por_funcionarios = Consulta.where(:funcionario_id => @ids, :empresa_id => @empresas_ids)
-  end
-
-    
-    if params[:busca][:empresa_id].present?
-      @por_empresa =  Consulta.where(empresa_id: params[:busca][:empresa_id])
-    end
-    
-    if params[:busca][:data_inicio].present?
-        if params[:busca][:empresa_id].present?
-           @por_inicio =  Consulta.where(:empresa_id => params[:busca][:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-        else
-          if session[:user_tipo] == 1
-            @por_inicio =  Consulta.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-          elsif session[:user_tipo] == 2
-            @por_inicio =  Consulta.where(:empresa_id => @ids_empresas,:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-          else
-            @por_inicio =  Consulta.where(:empresa_id => session[:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
-
-          end
-              
-        end
-    end
-
-     #@consulta = @por_empresa+@por_inicio+@por_funcionarios
-     @consulta = @por_categoria+@por_empresa+@por_inicio+@por_funcionarios
-
-
-    
-    if session[:empresa_id]
-      @funcionarios = Funcionario.order('nome').where(empresa_id: session[:empresa_id])
-      @empresas = Empresa.order('nome').where(id: session[:empresa_id])
-      @empresa = true
-    else
       @empresa = false
       if session[:user_tipo] == 1
-        @empresas = Empresa.order('nome').all    
-      else
-        @empresas = Empresa.order('nome').where(user_id: session[:user_id])  
+        @empresas = Empresa.all
+      elsif session[:user_tipo] == 2
+        @empresas = Empresa.where(:user_id => session[:user_id])
       end
-     
+    else
+      @empresa = true
+      @empresas   = Empresa.where(:id => session[:empresa_id] )
+
     end
 
+    if (params[:busca][:nome].present?)
+      @funcionarios = Funcionario.find(:all, :conditions => ['nome LIKE ? or rg LIKE ? or matricula LIKE ?', "%#{params[:busca][:nome]}%","%#{params[:busca][:nome]}%","%#{params[:busca][:nome]}%"])
+      @consultas = Consulta.where(:funcionario_id => @funcionarios)
+      scope = scope.where(:consulta_id => @consultas)
+    end
+
+    if (params[:busca][:categoria_id].present?)
+      scope = scope.where(:categoria_id => params[:busca][:categoria_id])
+    end
+    if (params[:busca][:data_inicio].present? and params[:busca][:data_fim].present? )
+      scope = scope.where(:data => params[:busca][:data_inicio].to_time.strftime("%Y-%m-%d")..params[:busca][:data_fim].to_time.strftime("%Y-%m-%d"))
+    end
+    if (params[:busca][:empresa_id].present?)
+      @consultas = Consulta.find(:all, :conditions => ['empresa_id = ?', params[:busca][:empresa_id]])
+      scope = scope.where(:consulta_id => @consultas)
+    end
+
+    @arquivos = scope.includes(consulta: [:funcionario, :empresa]).all
     @categorias = Categoria.all
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @exames }
     end
-
   end
 
   # GET /consultas/1

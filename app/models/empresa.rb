@@ -1,9 +1,9 @@
 class Empresa < ActiveRecord::Base
   attr_accessible :cnpj, :email, :login, :nome, :password, :password_confirmation, :password_digest, :user_id
   has_secure_password
+
   belongs_to :user
-  has_many :funcionarios
-  has_many :exames
+  has_many :funcionarios, dependent: :destroy
   has_many :consultas
 
 

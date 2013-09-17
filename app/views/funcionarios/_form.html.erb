@@ -28,6 +28,15 @@
   </div>
 
   <div class="form-group">
+    <label class="col-lg-2 control-label"><%= f.label :matricula %></label>
+    <div class="col-lg-4">
+      <%= f.text_field :matricula, class: 'form-control',:required => true %> <br/>
+    </div>
+  </div>
+
+
+
+  <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :empresa_id %></label>
     <div class="col-lg-4">
       <%= f.collection_select(:empresa_id, @empresas, :id, :nome, {:prompt => 'Selecione a empresa que ele trabalha.'}, {:class=>'form-control',:required => true}) %>

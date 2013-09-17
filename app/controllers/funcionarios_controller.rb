@@ -90,7 +90,13 @@ class FuncionariosController < ApplicationController
   # GET /funcionarios/1/edit
   def edit
     @funcionario = Funcionario.find(params[:id])
-    @empresas = Empresa.where(:user_id => session["user_id"])
+    if session[:user]
+      if session[:user_tipo] == 1
+        @empresas = Empresa.all
+      else
+        @empresas = Empresa.where(user_id: session[:user_id])
+      end  
+    end
   end
 
   # POST /funcionarios

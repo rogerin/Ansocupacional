@@ -1,5 +1,8 @@
 class PageController < ApplicationController
   def index
+
+    #scope = Asset
+
   	if session[:user]
       if session[:user_tipo]  == 1
         @usuarios = User.count

@@ -1,4 +1,168 @@
+    """
+    @por_empresa = []
+    @por_inicio = []
+    @por_funcionarios = []
+    @por_categoria []
+
+    if session[:user] == 1
+      @empresas_ids = Empresa.all
+      @ids_empresas = []
+      @empresas_ids.each do |emp|
+        @ids_empresas << emp.id
+      end
+    elsif session[:user] == 2
+      @empresas_ids = Empresa.where(:user_id => session[:user_id])
+      @ids_empresas = []
+      @empresas_ids.each do |emp|
+        @ids_empresas << emp.id
+      end
+    end
+
+
+   if !params[:busca][:nome].empty?
+    @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
+      @ids = []
+      @funcionarios_ids.each do |func|
+        @ids << func.id
+      end
+    @por_funcionarios = Consulta.where(:funcionario_id => @ids, :empresa_id => @empresas_ids)
+  end
+
+    if !params[:busca][:categoria_id].empty?
+      @por_categoria =  Consulta.where(categoria_id: params[:busca][:categoria_id],empresa_id: @ids_empresas)
+    end
+    
+    if !params[:busca][:empresa_id].empty?
+      @por_empresa =  Consulta.where(empresa_id: params[:busca][:empresa_id])
+    end
+    
+    if !params[:busca][:data_inicio].empty?
+        if p!arams[:busca][:empresa_id].empty?
+           @por_inicio =  Consulta.where(:empresa_id => params[:busca][:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+        else
+          if session[:user_tipo] == 1
+            @por_inicio =  Consulta.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+          elsif session[:user_tipo] == 2
+            @por_inicio =  Consulta.where(:empresa_id => @ids_empresas,:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+          else
+            @por_inicio =  Consulta.where(:empresa_id => session[:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+
+          end
+              
+        end
+    end
+
+    @exames = @por_empresa+@por_inicio+@por_funcionarios
+
+
+    
+    if session[:empresa_id]
+      @funcionarios = Funcionario.order('nome').where(empresa_id: session[:empresa_id])
+      @empresas = Empresa.order('nome').where(id: session[:empresa_id])
+      @empresa = true
+    else
+      if session[:user]
+        if session[:user_tipo] == 1
+          @empresas = Empresa.order('nome').all    
+        else
+          @empresas = Empresa.order('nome').where(user_id: session[:user_id])  
+        end
+      end
+    end
+    """
+
      <!--<%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{root_url}data/#{exame.link}", class: "btn btn-default" %>
               <%= link_to 'Visualizar', exame, class: "btn btn-default" %>
               <%= link_to 'Editar', edit_exame_path(exame), class: "btn btn-default" %>
               <%= link_to 'Deletar', exame, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              [15/setembro]
+
+              @por_categoria = []
+    @por_empresa = []
+    @por_inicio = []
+    @por_funcionarios = []
+
+
+    if session[:user]
+      @empresas_ids = Empresa.where(:user_id => session[:user_id])
+      @ids_empresas = []
+      @empresas_ids.each do |emp|
+        @ids_empresas << emp.id
+      end
+    else
+      @empresas_ids = Empresa.where(:user_id => session[:empresa_id])
+      @ids_empresas = []
+      @empresas_ids.each do |emp|
+        @ids_empresas << emp.id
+      end
+    end
+
+   
+
+   if params[:busca][:nome]
+
+    @funcionarios_ids = Funcionario.find_by_sql("select id from funcionarios WHERE nome LIKE '%#{params[:busca][:nome]}%' or rg LIKE '%#{params[:busca][:nome]}%'")
+
+      @ids = []
+      @funcionarios_ids.each do |func|
+        @ids << func.id
+      end
+    @por_funcionarios = Consulta.where(:funcionario_id => @ids, :empresa_id => @empresas_ids)
+  end
+
+    
+    if params[:busca][:empresa_id].present?
+      @por_empresa =  Consulta.where(empresa_id: params[:busca][:empresa_id])
+    end
+    
+    if params[:busca][:data_inicio].present?
+        if params[:busca][:empresa_id].present?
+           @por_inicio =  Consulta.where(:empresa_id => params[:busca][:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+        else
+          if session[:user_tipo] == 1
+            @por_inicio =  Consulta.where(:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+          elsif session[:user_tipo] == 2
+            @por_inicio =  Consulta.where(:empresa_id => @ids_empresas,:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+          else
+            @por_inicio =  Consulta.where(:empresa_id => session[:empresa_id],:created_at => Time.parse(params[:busca][:data_inicio])...Time.parse(params[:busca][:data_fim]))
+
+          end
+              
+        end
+    end
+
+     #@consulta = @por_empresa+@por_inicio+@por_funcionarios
+     @consulta = @por_categoria+@por_empresa+@por_inicio+@por_funcionarios
+
+
+    
+    if session[:empresa_id]
+      @funcionarios = Funcionario.order('nome').where(empresa_id: session[:empresa_id])
+      @empresas = Empresa.order('nome').where(id: session[:empresa_id])
+      @empresa = true
+    else
+      @empresa = false
+      if session[:user_tipo] == 1
+        @empresas = Empresa.order('nome').all    
+      else
+        @empresas = Empresa.order('nome').where(user_id: session[:user_id])  
+      end
+     
+    end

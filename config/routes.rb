@@ -11,8 +11,6 @@ Ansexameonline::Application.routes.draw do
   get "sessions/logout"
 
 
-  post "exames/busca"
-  get "exames/busca"
   
   post "consultas/busca"
   get "consultas/busca"
@@ -26,7 +24,6 @@ Ansexameonline::Application.routes.draw do
   post "javascripts/valida_funcionario_rg"
 
   resource :sessions
-  resources :exames
   resources :funcionarios
   resources :empresas
   resources :users

@@ -1,8 +1,6 @@
 class Categoria < ActiveRecord::Base
   attr_accessible :nome
-  has_many :exames
-  has_many :consultas
-  has_many :assets
+  has_many :assets, dependent: :destroy
 
 
 

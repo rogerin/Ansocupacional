@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :login, :nome, :password, :password_confirmation, :password_digest, :tipo, :link, :status
+  attr_accessible :email, :login, :nome, :password, :password_confirmation, :tipo, :link, :status
   has_secure_password
-  has_many :empresas
+  has_many :empresas, dependent: :destroy
 
   validates :email, :login, :nome, :password, :password_confirmation, :tipo, presence: true
   validates :password, confirmation: true

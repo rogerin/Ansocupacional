@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130912233449) do
+ActiveRecord::Schema.define(:version => 20130915022052) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(:version => 20130912233449) do
     t.integer  "categoria_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.date     "data"
   end
-
 
   create_table "categorias", :force => true do |t|
     t.string   "nome"
@@ -34,21 +34,10 @@ ActiveRecord::Schema.define(:version => 20130912233449) do
   create_table "consultas", :force => true do |t|
     t.integer  "funcionario_id"
     t.integer  "empresa_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
-  create_table "eexames", :force => true do |t|
-    t.integer  "categoria_id"
-    t.integer  "funcinonario_id"
-    t.integer  "empresa_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "pdf_file_name"
-    t.string   "pdf_content_type"
-    t.integer  "pdf_file_size"
-    t.datetime "pdf_updated_at"
-  end
 
   create_table "empresas", :force => true do |t|
     t.string   "nome"
@@ -80,16 +69,7 @@ ActiveRecord::Schema.define(:version => 20130912233449) do
     t.integer  "empresa_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "produtos", :force => true do |t|
-    t.string   "nome"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "pdf_file_name"
-    t.string   "pdf_content_type"
-    t.integer  "pdf_file_size"
-    t.datetime "pdf_updated_at"
+    t.string   "matricula"
   end
 
   create_table "users", :force => true do |t|

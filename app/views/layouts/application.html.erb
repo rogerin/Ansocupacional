@@ -13,6 +13,7 @@
 
 <body>
 <div id="wrap">
+<div class="col-md-12">
   <div class="navbar navbar-default  navbar-fixed-top">
   	<div class="container">
 	  <div class="navbar-header">
@@ -41,10 +42,10 @@
 					</ul>
 				  </li>
 				  <li class="dropdown">
-				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
+				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tipo de exame <b class="caret"></b></a>
 				  	<ul class="dropdown-menu">
 				  	  <li> <%= link_to "Listar", categorias_path %> </li>
-				  	  <li> <%= link_to "Nova Categoria", new_categoria_path %> </li>
+				  	  <li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
 					</ul>
 				  </li>
 
@@ -64,6 +65,15 @@
 					</ul>
 				  </li>
 
+
+				  <li class="dropdown">
+				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tipo de exame <b class="caret"></b></a>
+				  	<ul class="dropdown-menu">
+				  	  <li> <%= link_to "Listar", categorias_path %> </li>
+				  	  <li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
+					</ul>
+				  </li>
+
 				  <li class="dropdown">
 				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -71,6 +81,8 @@
 					  <li> <%= link_to "Nova Empresa", new_empresa_path %> </li>
 					</ul>
 				  </li>
+
+
 	  
 		  	  <% end %>
 		  <% end %>
@@ -118,15 +130,18 @@
 	  </div>
 	</div><!--/.nav-collapse -->
   </div>
-  <div id="main" class="container">
-  	<div class="row">
-	  	<%= flash_message %>
-	</div>
-	<div class="row">
+
+
+</div>
+
+
+  <div id="main" class="container">  
+
 	  <div class="col-lg-12">
+	  	<%= flash_message %>
 		<%= yield %>
 	   </div>
-	</div>
+
 	
   </div><!-- /.container -->
 </div>
@@ -134,7 +149,7 @@
 <footer class="footer">
   <div class="container">
 	<p>
-		Desenvolvido por <a href="http://www.analisesistemas.com">ANS Sistemas</a>. A<small>poio: <a href="http://www.twitter.com/rogerin">Rogerio Alencar Filho</a>.</small>
+		<a href="http://www.analisesistemas.com"><img src="http://www.analisesistemas.com/images/rodape_ans.png" /></a>
 	</p>
   </div>
 </footer>

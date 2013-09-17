@@ -4,8 +4,12 @@
       <h2><%= pluralize(@user.errors.count, "error") %> para corrigir:</h2>
 
       <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li class="text-danger"><%= msg %></li>
+      <% @user.errors.full_messages.each do |msg| 
+          next if msg == 'Password digest não pode ficar em branco'
+        %>
+        <li class="text-danger">
+          <%= msg%>
+        </li>
       <% end %>
       </ul>
     </div>

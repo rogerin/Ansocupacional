@@ -1,4 +1,8 @@
-<%= form_for(@consulta, :multipart => true, :html => {:class => "form-horizontal"}) do |f| %>
+<link rel="stylesheet" type="text/css" href="http://ansexameonline.herokuapp.com/css/datepicker.css">
+<script type="text/javascript" src="http://ansexameonline.herokuapp.com/js/bootstrap-datepicker.js"></script>
+
+
+<%= form_for(@consulta, :multipart => true, :html => {:id => 'formulario', :class => "form-horizontal"}) do |f| %>
   <% if @consulta.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@consulta.errors.count, "error") %> para corrigir:</h2>
@@ -12,48 +16,56 @@
   <% end %>
 
 
-
     <div class="form-group">
       <label class="col-lg-2 control-label">Empresa</label>
       <div class="col-lg-4">
-        <%= f.collection_select :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa'}, {:id => 'exame_empresa_id', :class=>'form-control', :allow_blank => true,:required => true } %>
+        <%= f.collection_select :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa'}, {:id => 'lista_empresa',:class=>'form-control', :allow_blank => true,:required => true } %>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-lg-2 control-label">Funcionário</label>
+      <label class="col-lg-2 control-label">Busca Funcionário</label>
       <div class="col-lg-4">
-        <%= f.collection_select :funcionario_id, @funcionarios, :id, :nome, {:prompt => 'Selecione a empresa'}, {:class=>'funcionarios form-control', :allow_blank => true,:required => true } %>
+        
+        <input id="busca_funcionario" class="form-control" autocomplete="off" type="text" required placeholder="Nome ou Matricula" />
       </div>
     </div>
-    <hr/ >
 
+    <div class="form-group">
+      
+      <label class="col-lg-2 control-label"></label>
+      <div class="col-lg-4">
+        <h4>Selecione um funcionário</h4>   
+          <div id="list_funcionarios"></div>
+
+      </div>
+    </div>
+
+    <hr/ >
 
 
 <%= f.fields_for :assets do |u| %>
   <div class="row">
-    <div class="col-lg-2">
-
-    </div>
+  
     <div class="col-lg-3">
-      <%= u.file_field :asset, :allow_blank => true, class: 'form-control',:multipart => true  %>
+
+      <%= u.file_field :asset, :allow_blank => true, class: 'upload_pdf form-control',:multipart => true  %>
     </div>
     <div class="col-lg-3">
       <%= u.collection_select :categoria_id, Categoria.all, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :allow_blank => true,:multipart => true  } %>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-2">
+      <%= u.text_field :data, :allow_blank => true, class: 'form-control dpd', :multipart => true  %>
+
+    </div>
+    <div class="col-lg-2">
 
     </div>
     
   </div> <hr/>
 <% end %>
+  <div id="alerta" class="alert alert-info"> <strong><h3>Selecione um arquivo.</h3></strong> <p>No minimo você deve enviar 1 exame em anexo.</p></div>
 
-
-
-
-
-
- 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-2">
       <%= f.submit 'Salvar', class: 'btn btn-success' %>
@@ -62,13 +74,74 @@
 
 
 <% end %>
+
 <script type="text/javascript">
 
-$('#enviar_outro').click(function(){
-  console.log("outro");
-  return false;
-})
 
+;(function($){
+
+$('#alerta').hide();
+var nowTemp = new Date();
+var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+ 
+var data = $('.dpd').datepicker({
+  format: 'dd-mm-yyyy',
+}).on('changeDate', function(ev) {
+  data.hide();
+}).data('datepicker');
+
+$('#busca_funcionario').keypress(function(){
+
+  if ($(this).val().length > 1) {
+    if($("#lista_empresa").val().length == 0) {
+          $("#list_funcionarios").html("<div class='alert alert-danger'><strong>Selecione a empresa!</strong> <p>Você deve selecionar uma empresa primeiro para a busca ser mais exata e precisa.</p></div>");
+    } else {
+      $.ajax({ 
+        url: "<%= javascripts_funcionarios_dinamicos_path %>",
+        type: "POST", 
+        data: { 'nome': $(this).val(), 'empresa_id': $("#lista_empresa").val() },
+        beforeSend: function(){
+         $('#list_funcionarios').html("<strong>Carregando Funcionários....</strong>"); 
+        },
+        success: function(data)   //here is object
+        {
+          $('#list_funcionarios').empty();
+          var result = JSON.parse(data);
+          console.log(result.length);
+          if (result.length == 0) {
+              $("#busca_funcionario").val('');
+             $("#list_funcionarios").html("<div class='alert alert-danger'><strong>Nenhum Funcionario!</strong> <p>Não existe funcionário cadastrado com nome, rg ou matricula com o digitado acima.</p></div>");
+          }
+          $.each(result , function(k, item) { 
+            $('#list_funcionarios').append("<div class=\"radio\"><label>" + item.matricula + " - " +item.nome+" <input type=\"radio\" class=\"funcionario_select\" name=\"consulta[funcionario_id]\" value=\""+item.id+"\" required ></label></div>")
+          });
+        },
+        error: function(){
+          alert("Ocorreu um ERRO no carregamento do AJAX, entre em contato com o desenvolvedor.");
+        },
+        dataType : "html"
+      });
+    }
+  }
+  else {
+    
+  }
+});
+
+
+$('#formulario').submit(function(){
+  var file = $('.upload_pdf').val();
+
+  if(file[0]) {
+    console.log("envia form");
+    $('#alerta').hide();
+    return true;
+  } else {
+    console.log("nao envia form");
+    $('#alerta').show();
+    return false;
+  }
+});
 
 $("#exame_empresa_id").change(function(){
     var empresa_id = $(this).val();
@@ -97,6 +170,12 @@ $("#exame_empresa_id").change(function(){
       dataType : "html"
     });      
   });
+
+
+
+  
+}(jQuery));
+
 
 </script>
 
