@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :login, :nome, :password, :password_confirmation, :tipo, :link, :status
+  attr_accessible  :nome, :email, :login, :password, :password_confirmation, :tipo, :avatar, :status, :avatar_file_name
+  has_attached_file :avatar, styles: {thumb: "140x50"}
+
   has_secure_password
   has_many :empresas, dependent: :destroy
 
-  validates :nome, :email, :login, :password, :password_confirmation, :tipo, presence: true
-  validates :password, confirmation: true
+  validates :nome, :email, :login, :password, :password_confirmation, :tipo, presence: true, :on => :create
+  validates :password, confirmation: true, :on => :create
 
 	def self.login(login,password)
 		find_by_login(login).try(:authenticate, password)
@@ -20,5 +22,4 @@ class User < ActiveRecord::Base
     	File.open(path, "wb") { |f| f.write(upload.read) }
       name
   	end
-
 end

@@ -40,14 +40,16 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    if params[:user][:link]
-       post = User.save(params[:user][:link])
-    else
-      post = 'ans.png'
-    end
-    
-  
-    @user = User.new(link: post, email: params[:user][:email], login: params[:user][:login], nome: params[:user][:nome], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation], tipo: params[:user][:tipo])
+
+    #if params[:user][:link]
+     #  post = User.save(params[:user][:link])
+    #else
+     # post = 'ans.png'
+    #end
+
+     
+    @user = User.new(params[:user])
+    #@user = User.new(link: post, email: params[:user][:email], login: params[:user][:login], nome: params[:user][:nome], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation], tipo: params[:user][:tipo])
 
     respond_to do |format|
       if @user.save
@@ -100,5 +102,16 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, flash: { success: 'User deletado com sucesso.' } }
       format.json { head :no_content }
     end
+  end
+
+  def alterar_imagem
+    @user = User.find(params[:id])    
+  end
+  def update_imagem
+    post = User.save(params[:user][:link])
+    @user = User.find(:id => params[:user][:id])
+    @user.update_attributes(:link => post)
+    redirect_to edit_user_path @user
+
   end
 end

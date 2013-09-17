@@ -27,3 +27,8 @@
   <b>Tipo:</b>
   <%= return_tipo @user.tipo %>
 </p>
+
+<p>
+  <b>Logomarca</b>
+  <%= image_tag @user.avatar.url(:thumb) %>
+</p>

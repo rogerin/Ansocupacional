@@ -6,7 +6,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest
       t.string :login
       t.integer :tipo
-      t.string :link
 
       t.timestamps
     end

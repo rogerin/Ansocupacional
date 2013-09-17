@@ -55,15 +55,14 @@
     <label class="col-lg-2 control-label">Logomarca</label>
     <div class="col-lg-4">
       <% if @user.id.present? %>
-        <img src="<%= root_url %>clinica/<%= @user.link %>" width="140"/> <br/>
-        <a href="#"> Enviar nova Logomarca </a>
-      <% else %>
-        <%= f.file_field :link, class: 'form-control' %>
+        <%= image_tag @user.avatar.url(:thumb) %>
       <% end %>
+        <%= f.file_field :avatar, class: 'form-control' %>
+        <p class="text-danger">A imagem deve ser <strong>140x50</strong> !</p>
+      
     </div>
   </div>
    
-    
 
    
   <% if session[:user_tipo] == 1 %>

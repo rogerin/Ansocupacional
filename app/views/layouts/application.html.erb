@@ -23,7 +23,7 @@
 	  		<span class="icon-bar"></span>
 		</button>
 		<% if session[:user_link] %>
-			<a href="<%= root_url %>"><img src='<%= root_url %>clinica/<%= session[:user_link] %>' width="140"  class= " logomarca" /></a>
+			<a href="<%= root_url %>"><%= image_tag session[:user_link] %></a>
 		<% end %>
 
 	  </div>

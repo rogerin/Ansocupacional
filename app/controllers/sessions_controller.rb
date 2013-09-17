@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 						session[:user_id]	= @user.id
 						session[:user_nome] = @user.nome
 						session[:user_tipo] = @user.tipo
-						session[:user_link] = @user.link
+						session[:user_link] = @user.avatar.url(:thumb)
 						session[:user]		= true
 						session[:logado]	= true
 						redirect_to session[:requested_url] || root_path
@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
 						session[:empresa_nome]	= @empresa.nome
 						session[:empresa_email]	= @empresa.email
 						session[:empresa_cnpj]	= @empresa.cnpj
-						session[:user_link] = @link.link
+						session[:user_link] = @link.avatar.url(:thumb)
 						session[:user]			= false
 						session[:logado]		= true
 						redirect_to session[:requested_url] || "exames#index"
