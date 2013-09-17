@@ -57,6 +57,8 @@ class ConsultasController < ApplicationController
     else
       @empresa = true
       @empresas   = Empresa.where(:id => session[:empresa_id] )
+      @consultas = Consulta.find(:all, :conditions => ['empresa_id = ?', @empresas])
+      scope = scope.where(:consulta_id => @consultas)
     end
 
     if (params[:busca][:nome].present?)

@@ -14,7 +14,7 @@
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :nome %></label>
     <div class="col-lg-4">
-      <%= f.text_field :nome, class: 'form-control' %>
+      <%= f.text_field :nome, class: 'form-control',:required => true %>
     </div>
   </div>
   <div class="form-group">
@@ -26,25 +26,25 @@
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :email %></label>
     <div class="col-lg-4">
-      <%= f.text_field :email, class: 'form-control' %>
+      <%= f.text_field :email, class: 'form-control',:required => true %>
     </div>
   </div>
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :login %></label>
     <div class="col-lg-4">
-      <%= f.text_field :login, class: 'form-control' %>
+      <%= f.text_field :login, class: 'form-control',:required => true %>
     </div>
   </div>
   <div class="form-group">
     <label class="col-lg-2 control-label">Senha</label>
     <div class="col-lg-4">
-      <%= f.text_field :password, class: 'form-control'%>
+      <%= f.text_field :password, class: 'form-control',:required => true %>
     </div>
   </div>
   <div class="form-group">
     <label class="col-lg-2 control-label">Confirmar senha</label>
     <div class="col-lg-4">
-      <%= f.text_field :password_confirmation, class: 'form-control' %>
+      <%= f.text_field :password_confirmation, class: 'form-control',:required => true %>
     </div>
   </div>
   
