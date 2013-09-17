@@ -145,6 +145,8 @@ $('#formulario').submit(function(){
 
 $("#exame_empresa_id").change(function(){
     var empresa_id = $(this).val();
+    $("#list_funcionarios").html('');
+    $("#busca_funcionario").val('');
     //console.log(empresa_id);
     $.ajax({ 
       url: "<%= javascripts_funcionarios_dinamicos_path %>",

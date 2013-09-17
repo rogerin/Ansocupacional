@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :empresas, dependent: :destroy
 
-  validates :email, :login, :nome, :password, :password_confirmation, :tipo, presence: true
+  validates :nome, :email, :login, :password, :password_confirmation, :tipo, presence: true
   validates :password, confirmation: true
 
 	def self.login(login,password)
