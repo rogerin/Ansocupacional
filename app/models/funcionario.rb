@@ -6,5 +6,8 @@ class Funcionario < ActiveRecord::Base
 
 
   validates :empresa_id, :nome, :rg,  presence: true
+  validates_uniqueness_of :rg, message: " - ja cadastrado"
+  validates_uniqueness_of :matricula, message: " - ja cadastrada"
+
   
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917185959) do
+ActiveRecord::Schema.define(:version => 20130918161048) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(:version => 20130917185959) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.date     "data"
+  end
+
+  create_table "categoria", :force => true do |t|
+    t.string   "nome"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "categorias", :force => true do |t|
@@ -49,19 +55,6 @@ ActiveRecord::Schema.define(:version => 20130917185959) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "exames", :force => true do |t|
-    t.string   "link"
-    t.integer  "categoria_id"
-    t.integer  "funcionario_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.integer  "empresa_id"
-    t.string   "pdf_file_name"
-    t.string   "pdf_content_type"
-    t.integer  "pdf_file_size"
-    t.datetime "pdf_updated_at"
-  end
-
   create_table "funcionarios", :force => true do |t|
     t.string   "nome"
     t.string   "rg"
@@ -71,16 +64,29 @@ ActiveRecord::Schema.define(:version => 20130917185959) do
     t.string   "matricula"
   end
 
+  create_table "log_empresas", :force => true do |t|
+    t.integer  "empresa_id"
+    t.string   "mensagem"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "logs", :force => true do |t|
+    t.integer  "tipo"
+    t.string   "mensagem"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "nome"
     t.string   "email"
     t.string   "password_digest"
     t.string   "login"
-    t.integer  "tipo"
-    t.string   "link"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.integer  "status"
+    t.integer  "tipo",                :default => 2, :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "status",              :default => 2, :null => false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

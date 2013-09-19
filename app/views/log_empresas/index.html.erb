@@ -1,0 +1,26 @@
+<h1>Registro de Acessos <small>últimos 200 acessos.</small></h1>
+
+<% link_to 'New Log empresa', new_log_empresa_path %>
+
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><small>#</small></th>
+      <th><small>Empresa</small></th>
+      <th><small>Mensagem</small></th>
+      <th><small>Data</small></th>
+      <th><small>#</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @log_empresas.each do |log| %>
+      <tr>
+        <td><%= log.id %></td>
+        <td><%= log.empresa.nome %></td>
+        <td><%= log.mensagem %></td>
+        <td><%= log.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
+        <td><%= time_ago_in_words(log.created_at) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

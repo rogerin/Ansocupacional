@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :password_digest
       t.string :login
-      t.integer :tipo
+      t.integer :tipo, :null => false, :default => 2
 
       t.timestamps
     end

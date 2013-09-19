@@ -6,14 +6,14 @@
 	<title>Exame Online</title>
 	<%= stylesheet_link_tag    "application", :media => "all" %>
 	<%= javascript_include_tag "application" %>
-	<link rel="stylesheet" type="text/css" href="http://ansexameonline.herokuapp.com/css/bootstrap.min.css">
-	<script type="text/javascript" src="http://ansexameonline.herokuapp.com/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%= root_url %>css/bootstrap.min.css">
+	<script type="text/javascript" src="<%= root_url %>js/bootstrap.min.js"></script>
 	<%= csrf_meta_tags %>
 </head>
 
 <body>
-<div id="wrap">
-<div class="col-md-12">
+
+<div class="row">
   <div class="navbar navbar-default  navbar-fixed-top">
   	<div class="container">
 	  <div class="navbar-header">
@@ -42,12 +42,19 @@
 					</ul>
 				  </li>
 				  <li class="dropdown">
-				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tipo de exame <b class="caret"></b></a>
-				  	<ul class="dropdown-menu">
-				  	  <li> <%= link_to "Listar", categorias_path %> </li>
-				  	  <li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
-					</ul>
+				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configurações <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+							<li role="presentation" class="dropdown-header">Tipos de Exames</li>
+							  	<li> <%= link_to "Listar Tipos de exames", categorias_path %> </li>
+							  	<li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
+							
+								<li role="presentation" class="divider"></li>
+								<li role="presentation" class="dropdown-header">Relatórios</li>
+								<li> <%= link_to "Relatório de Acessos", log_empresas_path %> </li>
+						</ul>
 				  </li>
+
+
 
 				  <li class="dropdown">
 				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas <b class="caret"></b></a>
@@ -66,12 +73,17 @@
 				  </li>
 
 
-				  <li class="dropdown">
-				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tipo de exame <b class="caret"></b></a>
-				  	<ul class="dropdown-menu">
-				  	  <li> <%= link_to "Listar", categorias_path %> </li>
-				  	  <li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
-					</ul>
+				 <li class="dropdown">
+				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configurações <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+							<li role="presentation" class="dropdown-header">Tipos de Exames</li>
+							  	<li> <%= link_to "Listar Tipos de exames", categorias_path %> </li>
+							  	<li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
+							
+								<li role="presentation" class="divider"></li>
+								<li role="presentation" class="dropdown-header">Relatórios</li>
+								<li> <%= link_to "Relatório de Acessos", log_empresas_path %> </li>
+						</ul>
 				  </li>
 
 				  <li class="dropdown">
@@ -133,11 +145,12 @@
 
 
 </div>
+<div class="row">
 
 
   <div id="main" class="container">  
 
-	  <div class="col-lg-12">
+	  <div class="col-md-12">
 	  	<%= flash_message %>
 		<%= yield %>
 	   </div>

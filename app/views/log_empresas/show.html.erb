@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Empresa:</b>
+  <%= @log_empresa.empresa_id %>
+</p>
+
+<p>
+  <b>Mensagem:</b>
+  <%= @log_empresa.mensagem %>
+</p>
+
+
+<%= link_to 'Edit', edit_log_empresa_path(@log_empresa) %> |
+<%= link_to 'Back', log_empresas_path %>

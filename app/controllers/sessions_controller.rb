@@ -31,6 +31,7 @@ class SessionsController < ApplicationController
 					@empresa = Empresa.login(@session.login, @session.password)
 					if @empresa
 						@link = User.where(id: @empresa.user_id).first
+						LogEmpresa.create(:empresa_id => @empresa.id, :mensagem => "[Login] Empresa #{@empresa.nome} fez login");
 						session[:empresa_id]	= @empresa.id
 						session[:empresa_nome]	= @empresa.nome
 						session[:empresa_email]	= @empresa.email
@@ -68,6 +69,9 @@ class SessionsController < ApplicationController
 	end
 
 	def logout
+		if session[:empresa_id]
+			LogEmpresa.create(:empresa_id => session[:empresa_id], :mensagem => "[Logout] Empresa #{session[:empresa_nome]} fez login");
+		end
 		session[:user_id]		= nil
 		session[:user_nome]		= nil
 		session[:user_tipo]		= nil

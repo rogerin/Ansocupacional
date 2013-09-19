@@ -1,72 +1,137 @@
 <h2>Resumo</h2>
-<p></p>
-<% if session[:user] == true %>
-	<% if session[:user_tipo] == 1 %>
-		<div class="col-lg-3">
-			<div class="panel panel-default">
-			  <!-- Default panel contents -->
-			  <div class="panel-heading">Resumo de cadastros</div>
-			  	<ul class="list-group">
-				  <li class="list-group-item">
-				    <span class="badge"><%= @usuarios %></span>
-				    <%= link_to "Clínicas", users_path %>
-				  </li>
-				  <li class="list-group-item">
-				    <span class="badge"><%= @categorias %></span>
-				    <%= link_to "Tipos de exame", categorias_path %>
-				  </li>
-				  <li class="list-group-item">
-				    <span class="badge"><%= @empresas %></span>
-				    <%= link_to "Empresas", empresas_path %>
-				  </li>
-				  <li class="list-group-item">
-				    <span class="badge"><%= @funcionarios %></span>
-				    <%= link_to "Funcionários", funcionarios_path %>
-				  </li>
-				  <li class="list-group-item">
-				    <span class="badge"><%= @exames %></span>
-				    <%= link_to "Exames", consultas_path %>
-				  </li>
-				</ul>
+<p>
+	<hr />
+</p>
+
+<div class="row">
+	<div class="col-md-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+			 	 <div class="panel-heading">Resumo de cadastros</div>
+			  		<ul class="list-group">
+						<% if session[:user] == true %>
+							<% if session[:user_tipo] == 1 %>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @usuarios %></span>
+							    Clínicas 
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @categorias %></span>
+							    Tipos de exame
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @empresas %></span>
+							    Empresas
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @funcionarios %></span>
+							    Funcionários
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @exames %></span>
+							    Exames
+							  </li>
+						
+							<% else %>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @usuarios %></span>
+							    Clínicas 
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @categorias %></span>
+							    Tipos de exame
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @empresas %></span>
+							    Empresas
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @funcionarios %></span>
+							    Funcionários
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><%= @exames %></span>
+							    Exames
+							  </li>							<% end %>
+						<% else %>
+						  <li class="list-group-item">
+						    <span class="badge"><%= @categorias %></span>
+						    Tipos de exame
+						  </li>
+						  <li class="list-group-item">
+						    <span class="badge"><%= @funcionarios %></span>
+						    Funcionários
+						  </li>
+						  <li class="list-group-item">
+						    <span class="badge"><%= @exames %></span>
+						    Exames
+						  </li>
+						<% end %>
+					</ul>
+				</div>
 			</div>
 		</div>
-	<% else %>
-		<div class="col-lg-3">
-			<div class="panel panel-default">
-			  <!-- Default panel contents -->
-			  <div class="panel-heading">Resumo de cadastros</div>
-			  	<ul class="list-group">
-				  <li class="list-group-item">
-				    <span class="badge"><%= @categorias %></span>
-				    <%= link_to "Tipos de exame", categorias_path %>
-				  </li>
-				  <li class="list-group-item">
-				    <span class="badge"><%= @empresas %></span>
-				    <%= link_to "Empresas", empresas_path %>
-				  </li>
-				</ul>
+		<% if session[:empresa_id] %>
+		<% else %>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default toll">
+				 	 <div class="panel-heading">Relatório por tipo de exame <small>( <a href=""> ver detalhes </a>)</small></div>
+				  		<div class="panel-body">
+						    Aqui ficará a lista  dos tipos de exames cadastrados e a quantidade de exame cadastrados a cada tipo. 
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-	<% end %>
-<% else %>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-		  <!-- Default panel contents -->
-		  <div class="panel-heading">Resumo de cadastros</div>
-		  	<ul class="list-group">
-			  <li class="list-group-item">
-			    <span class="badge"><%= @categorias %></span>
-			    Tipos de exame
-			  </li>
-			  <li class="list-group-item">
-			    <span class="badge"><%= @funcionarios %></span>
-			    <%= link_to "Funcionários", funcionarios_path %>
-			  </li>
-			  <li class="list-group-item">
-			    <span class="badge"><%= @exames %></span>
-			    <%= link_to "Exames", consultas_path %>
-			  </li>
-			</ul>
+		<% end %>
+
+	</div>
+	
+	<div class="col-md-7">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+			        <!-- Default panel contents -->
+			        <div class="panel-heading">Log de Acesso, últimos 20 acessos. <% if session[:empresa_id] %><% else %> <small>( <%= link_to "Relatório mais detalhado.", log_empresas_path %>)</small>  <%end %></div>
+			        
+			        <!-- Table -->
+			        <table class="table table-hover table-condensed">
+			          <thead>
+			            <tr>
+			              <th><small>#</small></th>
+			              <th><small>Empresa</small></th>
+			              <th><small>Mensagem</small></th>
+			              <th><small>Data</small></th>
+			              <th><small>#</small></th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            <% @acessos.each do |a| %>
+				            <tr>
+				              <td><small><%= a.id %></small></td>
+				              <td><small><%= a.empresa.nome %></small></td>
+				              <td><small><%= a.mensagem %></small></td>
+				              <td><small><%= a.created_at.strftime("%d/%m/%Y %H:%M:%S") %></small></td>
+				              <td><small><%= time_ago_in_words(a.created_at) %></small></td>
+				            </tr>
+			            <% end %>
+			          </tbody>
+			        </table>
+				</div>
+			</div>
 		</div>
 	</div>
-<% end %>
+</div>
+
+<script type="text/javascript">
+
+$('.toll').popover({
+  selector: true,
+  placement: 'top',
+  trigger: 'hover',
+  title: 'Aviso Importante!',
+  content: 'Essa função ainda está em desenvolvimento, aguarde versão 2.0.'
+})
+
+</script>

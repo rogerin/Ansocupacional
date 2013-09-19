@@ -6,7 +6,7 @@ class CreateAssets < ActiveRecord::Migration
       t.integer :asset_file_size
       t.datetime :asset_updated_at
       t.integer :consulta_id
-      t.integer :categoria_id
+      t.integer :categoria_id, :null => true
 
 
       t.timestamps

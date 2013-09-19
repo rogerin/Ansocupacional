@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" href="http://ansexameonline.herokuapp.com/css/datepicker.css">
-<script type="text/javascript" src="http://ansexameonline.herokuapp.com/js/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<%= root_url %>css/datepicker.css">
+<script type="text/javascript" src="<%= root_url %>js/bootstrap-datepicker.js"></script>
 
 
 <%= form_for(@consulta, :multipart => true, :html => {:id => 'formulario', :class => "form-horizontal"}) do |f| %>
@@ -52,10 +52,10 @@
       <%= u.file_field :asset, :allow_blank => true, class: 'upload_pdf form-control',:multipart => true  %>
     </div>
     <div class="col-lg-3">
-      <%= u.collection_select :categoria_id, Categoria.all, :id, :nome, {:prompt => 'Selecione a categoria'}, {:class=>'form-control', :allow_blank => true,:multipart => true  } %>
+      <%= u.collection_select :categoria_id, Categoria.all, :id, :nome, {:prompt => 'Tipo do exame'}, {:class=>'upload_categoria form-control', :allow_blank => true,:multipart => true  } %>
     </div>
     <div class="col-lg-2">
-      <%= u.text_field :data, :allow_blank => true, class: 'form-control dpd', :multipart => true  %>
+      <%= u.text_field :data, :allow_blank => true, class: 'upload_data form-control dpd', :multipart => true  %>
 
     </div>
     <div class="col-lg-2">
@@ -64,7 +64,7 @@
     
   </div> <hr/>
 <% end %>
-  <div id="alerta" class="alert alert-info"> <strong><h3>Selecione um arquivo.</h3></strong> <p>No minimo você deve enviar 1 exame em anexo.</p></div>
+  <div id="alerta" class="alert alert-info"> <strong><h3>Verificar dados do arquivo em anexo!</h3></strong> <p>No minimo você deve enviar 1 exame em anexo e deve preencher todos os dados para o envio do anexo. Selecione 1 arquivo, selecione o tipo do exame e selecione uma data.</p></div>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-2">
@@ -129,10 +129,15 @@ $('#busca_funcionario').keypress(function(){
 });
 
 
+
+
 $('#formulario').submit(function(){
   var file = $('.upload_pdf').val();
+  var cat = $('.upload_categoria').val();
+  var data = $('.upload_data').val();
 
-  if(file[0]) {
+
+  if(file[0] && cat[0] && data) {
     console.log("envia form");
     $('#alerta').hide();
     return true;
