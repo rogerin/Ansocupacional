@@ -1,5 +1,7 @@
 class Empresa < ActiveRecord::Base
-  attr_accessible :nome, :cnpj, :email, :login,  :password, :password_confirmation, :password_digest, :user_id
+  attr_accessible :nome, :cnpj, :email, :login, :password, :password_confirmation, :password_digest, :user_id
+
+
   has_secure_password
 
   belongs_to :user
@@ -9,8 +11,11 @@ class Empresa < ActiveRecord::Base
 
 
 
-  validates :nome, :email, :login, :password, :password_confirmation, presence: true
-  validates :password, confirmation: true
+  validates :nome, :email, :login, presence: true
+  
+  validates :password, :presence =>true,
+                    :length => { :minimum => 3, :maximum => 40 }
+  
 
   validates_uniqueness_of :cnpj, message: " - CNPJ Ja cadastrado"
   validates_uniqueness_of :email, message: " - E-mail Ja cadastrado"

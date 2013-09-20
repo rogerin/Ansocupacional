@@ -43,6 +43,21 @@
 
     <hr/ >
 
+<div class="row">
+  <div class="col-lg-3">
+    <strong>Anexo</strong>
+  </div>
+  <div class="col-lg-3">
+    <strong>Tipo do exame</strong>
+  </div>
+  <div class="col-lg-2">
+    <strong>Data do exame</strong>
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+
+</div>
 
 <%= f.fields_for :assets do |u| %>
   <div class="row">
@@ -55,7 +70,7 @@
       <%= u.collection_select :categoria_id, Categoria.all, :id, :nome, {:prompt => 'Tipo do exame'}, {:class=>'upload_categoria form-control', :allow_blank => true,:multipart => true  } %>
     </div>
     <div class="col-lg-2">
-      <%= u.text_field :data, :allow_blank => true, class: 'upload_data form-control dpd', :multipart => true  %>
+      <%= u.text_field :data, :allow_blank => true, class: 'upload_data form-control dpd', :multipart => true, :placeholder => "Data dia-mês-ano" %>
 
     </div>
     <div class="col-lg-2">

@@ -5,8 +5,10 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :empresas, dependent: :destroy
 
-  validates :nome, :email, :login, :password, :password_confirmation, :tipo, presence: true, :on => :create
-  validates :password, confirmation: true, :on => :create
+  validates :nome, :email, :login, :password_confirmation, :tipo, presence: true, :on => :create
+  validates :password, :presence =>true,
+                    :length => { :minimum => 3, :maximum => 40 }
+
 
 	def self.login(login,password)
 		find_by_login(login).try(:authenticate, password)
