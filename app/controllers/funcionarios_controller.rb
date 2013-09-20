@@ -29,25 +29,29 @@ class FuncionariosController < ApplicationController
 
   def busca
 
-    if session[:user]
-      if session[:user_tipo] == 1
-        @empresas = Empresa.all
-        @funcionarios = Funcionario.all
-      else
-        @empresas = Empresa.where(user_id: session[:user_id])
-      end  
-    end
+    scopeF = Funcionario
+
+    if session[:user_tipo] == 1
+      @empresas = Empresa.all
+    elsif session[:user_id] == 2
+      @empresas = Empresa.where(user_id: session[:user_id])
+      scopeF = scopeF.where(:empresa_id => @empresas)
+    end  
+  
 
     if session[:empresa_id]
-      @empresa = Empresa.where(id: session[:empresa_id]).first
-      @funcionarios = Funcionario.where(empresa_id: session[:empresa_id])    
+      @empresa = Empresa.where(:id => session[:empresa_id])
+      scopeF = scopeF.where(empresa_id: session[:empresa_id])    
     end
 
-    if params[:funcionario]
-      @funcionarios = Funcionario.where(empresa_id: params[:funcionario][:empresa_id])
-    else
-      @funcionarios = []
+   
+
+    if params[:busca][:empresa_id].present?
+      scopeF = scopeF.where(empresa_id: params[:busca][:empresa_id])
     end
+
+
+    @funcionarios = scopeF.all
 
 
 

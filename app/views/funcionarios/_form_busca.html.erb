@@ -1,6 +1,6 @@
 <%= form_tag funcionarios_busca_path, :class => 'form-inline' do %>
 	<div class="form-group">
-		<%= collection_select(:funcionario, :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa...'}, {:class=>'form-control'}) %>
+		<%= collection_select(:busca, :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa...'}, {:class=>'form-control'}) %>
 	</div>
 
 	<%= submit_tag 'Buscar', :class => 'btn btn-default' %>
