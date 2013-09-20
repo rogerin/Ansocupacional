@@ -49,8 +49,8 @@
                   <td><%= arquivo.consulta.empresa.user.nome %></td>
                   <td><%= arquivo.consulta.empresa.nome %></td>
                 <% end %>
-                <td><%= arquivo.categoria.nome %></td>
-                <td><%= arquivo.data.strftime("%d/%m/%Y") %></td>
+                <td><%= arquivo.categoria.nome  unless arquivo.categoria_id.nil? %></td>
+                <td><%= arquivo.data.strftime("%d/%m/%Y") unless arquivo.data.nil? %></td>
                 <td><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{arquivo.asset.url}", class: "btn btn-default btn-xs", :target => "_blank" %></td>
               </tr>
           <% end %>

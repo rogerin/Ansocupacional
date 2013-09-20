@@ -72,20 +72,21 @@
 				</div>
 			</div>
 		</div>
-		<% if session[:empresa_id] %>
-		<% else %>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-default toll">
-				 	 <div class="panel-heading">Relatório por tipo de exame <small>( <a href=""> ver detalhes </a>)</small></div>
-				  		<div class="panel-body">
-						    Aqui ficará a lista  dos tipos de exames cadastrados e a quantidade de exame cadastrados a cada tipo. 
-						</div>
+				 	 <div class="panel-heading">Relatório por tipo de exame</div>
+						<ul class="list-group">
+							<% @por_categoria.each do |a| %>
+						  <li class="list-group-item">
+						    <span class="badge"><%= a.total %></span>
+						    <%= a.categoria.nome %>
+						  </li>
+						  <% end %>
+						</ul>
 					</div>
 				</div>
 			</div>
-		<% end %>
-
 	</div>
 	
 	<div class="col-md-7">

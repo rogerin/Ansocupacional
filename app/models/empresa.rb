@@ -5,7 +5,7 @@ class Empresa < ActiveRecord::Base
   belongs_to :user
   has_many :funcionarios, dependent: :destroy
   has_many :consultas
-  has_many :log_empresas
+  has_many :log_empresas, dependent: :destroy
 
 
 

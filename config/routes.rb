@@ -15,6 +15,8 @@ Ansexameonline::Application.routes.draw do
   post "consultas/busca"
   get "consultas/busca"
 
+  post "log_empresas/busca"
+
   match "users/alterar_imagem/:id" => "users#alterar_imagem", :as => :alterar_imagem
   post "users/update_imagem"
 

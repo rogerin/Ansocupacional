@@ -6,22 +6,51 @@ class LogEmpresasController < ApplicationController
     scope = LogEmpresa
 
     if session[:user_tipo] == 1
-
+      @empresas = Empresa.all
     elsif session[:user_tipo] == 2
       @empresas = Empresa.where(:user_id => session[:user_id])
       scope = scope.where(:empresa_id => @empresas)
+    else
+      @empresas = Empresa.find(session[:empresa_id])
     end
-      
+
 
     @log_empresas = scope.order("created_at DESC").limit(200)
-
-
-
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @log_empresas }
     end
+  end
+
+  def busca
+    scope = LogEmpresa
+
+    if session[:user_tipo] == 1
+      @empresas = Empresa.all
+    elsif session[:user_tipo] == 2
+      @empresas = Empresa.where(:user_id => session[:user_id])
+      scope = scope.where(:empresa_id => @empresas)
+    else
+      @empresas = Empresa.find(session[:empresa_id])
+    end
+
+
+
+    if (params[:busca][:data_inicio].present? and params[:busca][:data_fim].present? )
+      scope = scope.where(:created_at => params[:busca][:data_inicio].to_time.strftime("%Y-%m-%d")..params[:busca][:data_fim].to_time.strftime("%Y-%m-%d"))
+    end
+    if (params[:busca][:empresa_id].present?)
+      scope = scope.where(:empresa_id => params[:busca][:empresa_id])
+    end
+
+
+    @log_empresas = scope.order("created_at DESC").limit(200)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @log_empresas }
+    end    
   end
 
   # GET /log_empresas/1

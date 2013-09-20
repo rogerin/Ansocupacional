@@ -27,8 +27,8 @@
           if asset.asset.url == '/assets/original/missing.png'
           else %>
             <tr>
-              <td><%= asset.data.strftime('%d/%m/%Y') %></td>
-              <td> <%= asset.categoria.nome %></td>
+              <td><%= asset.data.strftime('%d/%m/%Y') unless asset.data.nil? %></td>
+              <td> <%= asset.categoria.nome  unless asset.categoria_id.nil? %></td>
               <td><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{asset.asset.url}", class: "btn btn-default btn-xs", :target => "_blank" %>
 
 
