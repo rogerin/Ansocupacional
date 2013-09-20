@@ -34,7 +34,7 @@ class PageController < ApplicationController
     end
 
     @por_categoria = Asset.select("COUNT(assets.categoria_id) as total, assets.categoria_id").group("assets.categoria_id")
-    @acessos = scope.includes(:empresa).select("log_empresas.empresa_id, log_empresas.id, log_empresas.mensagem, log_empresas.created_at").group("log_empresas.empresa_id").order("log_empresas.created_at DESC")
+    @acessos = scope.includes(:empresa).order("log_empresas.created_at DESC").limit(20)
     @categorias = Categoria.count
   end
 
