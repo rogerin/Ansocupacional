@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ConsultasController < ApplicationController
   # GET /consultas
   # GET /consultas.json
@@ -51,7 +52,7 @@ class ConsultasController < ApplicationController
         @empresas = Empresa.all
       elsif session[:user_tipo] == 2
         @empresas = Empresa.where(:user_id => session[:user_id])
-        @consultas = Consulta.find(:all, :conditions => ['empresa_id = ?', @empresas])
+        @consultas = Consulta.where(:empresa_id => @empresas)
         scope = scope.where(:consulta_id => @consultas)
       end
     else
@@ -80,12 +81,16 @@ class ConsultasController < ApplicationController
 
 
     @arquivos = scope.includes(consulta: [:funcionario, :empresa]).all
-    @categorias = Categoria.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @exames }
+    if @arquivos.size == 0
+      @arquivos = [] 
     end
+
+    @categorias = Categoria.all
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @exames }
+      end
+    
   end
 
   # GET /consultas/1

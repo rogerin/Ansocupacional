@@ -1,6 +1,5 @@
 Ansexameonline::Application.routes.draw do
 
-  resources :log_empresas
 
 
   root :to => "page#index"
@@ -8,9 +7,14 @@ Ansexameonline::Application.routes.draw do
   match 'users/desabilitar/:id' => 'users#desabilitar', :as => :desabilitar
   match 'users/habilitar/:id' => 'users#habilitar', :as => :habilitar
   
+  match 'empresas/desabilitar/:id' => 'empresas#desabilitar', :as => :desabilitar_empresa
+  match 'empresas/habilitar/:id' => 'empresas#habilitar', :as => :habilitar_empresa
+  
+
   get "page/index"
   get "page/login"
   get "sessions/logout"
+
   
   post "consultas/busca"
   get "consultas/busca"
@@ -19,14 +23,15 @@ Ansexameonline::Application.routes.draw do
 
   match "users/alterar_imagem/:id" => "users#alterar_imagem", :as => :alterar_imagem
   post "users/update_imagem"
-
  
   post "funcionarios/busca"
   get "funcionarios/busca"
 
   post "javascripts/funcionarios_dinamicos"
   post "javascripts/valida_funcionario_rg"
-  
+
+  post "assets/download"
+  resources :log_empresas
 
   resource :sessions
   resources :funcionarios

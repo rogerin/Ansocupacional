@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   validates :password, :presence =>true,
                     :length => { :minimum => 3, :maximum => 40 }
 
+  validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create, :message => "incorreto" }
+
+
 
 	def self.login(login,password)
 		find_by_login(login).try(:authenticate, password)

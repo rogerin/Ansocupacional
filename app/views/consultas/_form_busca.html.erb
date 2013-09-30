@@ -13,7 +13,7 @@
 			 <% else %>
 			 	<div class="form-group  col-md-2">
 			 		<label>Empresa: </label>
-					<%= collection_select(:busca, :empresa_id, @empresas, :id, :nome, {:prompt => 'Empresa...'}, {:class=>'form-control'}) %>
+					<%= collection_select(:busca, :empresa_id, @empresas, :id, :nome, {:prompt => 'Todas as empresas'}, {:class=>'form-control'}) %>
 				</div>
 		 	<% end %>
 		 <div class="form-group  col-md-2">
@@ -27,12 +27,12 @@
 		
 		<div class="form-group  col-md-2">
 			<label>Tipo Exame: </label>
-			<%= collection_select(:busca, :categoria_id, @categorias, :id, :nome, {:prompt => 'Tipo Exame...'}, {:class=>'form-control'}) %>
+			<%= collection_select(:busca, :categoria_id, @categorias, :id, :nome, {:prompt => 'Todos os tipos'}, {:class=>'form-control'}) %>
 		</div>
 	
 		<div class="form-group  col-md-2">
 			<br />
-			<%= submit_tag 'Buscar', :class => 'btn btn-default' %>
+			<%= submit_tag 'Listar Exame', :class => 'btn btn-default' %>
 		</div>
 	<% end -%>
 </div>

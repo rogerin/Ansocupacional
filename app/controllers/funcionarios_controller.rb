@@ -33,28 +33,21 @@ class FuncionariosController < ApplicationController
 
     if session[:user_tipo] == 1
       @empresas = Empresa.all
-    elsif session[:user_id] == 2
+    elsif session[:user_tipo] == 2
       @empresas = Empresa.where(user_id: session[:user_id])
       scopeF = scopeF.where(:empresa_id => @empresas)
     end  
   
-
     if session[:empresa_id]
       @empresa = Empresa.where(:id => session[:empresa_id])
       scopeF = scopeF.where(empresa_id: session[:empresa_id])    
     end
-
    
-
-    if params[:busca][:empresa_id].present?
-      scopeF = scopeF.where(empresa_id: params[:busca][:empresa_id])
+    if params[:empresa][:empresa_id].present?
+      scopeF = scopeF.where(empresa_id: params[:empresa][:empresa_id])
     end
 
-
-    @funcionarios = scopeF.all
-
-
-
+    @funcionarios = scopeF
 
     respond_to do |format|
       format.html # index.html.erb

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130918161048) do
+ActiveRecord::Schema.define(:version => 20130930160053) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -23,12 +23,6 @@ ActiveRecord::Schema.define(:version => 20130918161048) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.date     "data"
-  end
-
-  create_table "categoria", :force => true do |t|
-    t.string   "nome"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "categorias", :force => true do |t|
@@ -51,8 +45,9 @@ ActiveRecord::Schema.define(:version => 20130918161048) do
     t.string   "login"
     t.string   "password_digest"
     t.integer  "user_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "status",          :default => 1, :null => false
   end
 
   create_table "funcionarios", :force => true do |t|
@@ -71,13 +66,6 @@ ActiveRecord::Schema.define(:version => 20130918161048) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "logs", :force => true do |t|
-    t.integer  "tipo"
-    t.string   "mensagem"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "users", :force => true do |t|
     t.string   "nome"
     t.string   "email"
@@ -86,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20130918161048) do
     t.integer  "tipo",                :default => 2, :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.integer  "status",              :default => 2, :null => false
+    t.integer  "status",              :default => 0, :null => false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

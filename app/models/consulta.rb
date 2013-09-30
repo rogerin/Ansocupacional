@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Consulta < ActiveRecord::Base
   attr_accessible :funcionario_id, :empresa_id, :asset, :assets_attributes, :categoria_id, :funcionario_id
   belongs_to :funcionario

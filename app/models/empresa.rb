@@ -1,12 +1,12 @@
 class Empresa < ActiveRecord::Base
-  attr_accessible :nome, :cnpj, :email, :login, :password, :password_confirmation, :password_digest, :user_id
+  attr_accessible :nome, :cnpj, :email, :login, :password, :password_confirmation, :password_digest, :user_id, :status
 
 
   has_secure_password
 
   belongs_to :user
   has_many :funcionarios, dependent: :destroy
-  has_many :consultas
+  has_many :consultas, dependent: :destroy
   has_many :log_empresas, dependent: :destroy
 
 
@@ -15,6 +15,9 @@ class Empresa < ActiveRecord::Base
   
   validates :password, :presence =>true,
                     :length => { :minimum => 3, :maximum => 40 }
+
+  validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create, :message => "incorreto" }
+
   
 
   validates_uniqueness_of :cnpj, message: " - CNPJ Ja cadastrado"

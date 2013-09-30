@@ -4,66 +4,83 @@
     <p>
       <% if session[:empresa_id] %>
       <% else %>
-        <%= link_to 'Enviar Exame', new_consulta_path, class: 'btn btn-sm btn-default' %>
+        <%= link_to 'Enviar Exame', new_consulta_path, class: 'btn btn-sm btn-success' %>
       <% end %>
     </p>
   </div>
   <div class="col-lg-10">
-  
     <%= render 'form_busca' %>
   </div>
 </div>
-
 <br/>
 <div class="row">
-  
-    <table class="table table-condensed table-hover table-bordered">
-        <thead>
+  <%= form_tag assets_download_path, :id => 'form_itens' do %>
+
+  <table class="table table-condensed table-hover table-bordered">
+    <thead>
+      <tr>
+        <th><input type="checkbox" class="toll" onClick="toggle(this)"></th>
+        <th><small>#</small></th>
+        <th>Funcionario</th>
+        <th>Matricula</th>
+        <th>RG</th>
+        <% if !@empresa %>
+          <th>Clinica</th>
+          <th>Empresa</th>
+        <% end %>
+        <th>Tipo Exame</th>
+        <th>Data</th>
+        <th>-</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @arquivos.each do |arquivo| %>
           <tr>
-            <th><input type="checkbox" class="toll"></th>
-            <th>id</th>
-            <th>Funcionario</th>
-            <th>Matricula</th>
-            <th>RG</th>
-            <% if !@empresa %>
-              <th>Clinica</th>
-              <th>Empresa</th>
+            <td><input type="checkbox" class="check" name="arquivos[]" value="<%= arquivo.id %>"></td>
+            <td><small><%= arquivo.id %></small></td>
+            <td><%= arquivo.consulta.funcionario.nome %> </td>
+            <td><%= arquivo.consulta.funcionario.matricula %></td>
+            <td><%= arquivo.consulta.funcionario.rg %></td>
+             <% if !@empresa %>
+              <td><%= arquivo.consulta.empresa.user.nome %></td>
+              <td><%= arquivo.consulta.empresa.nome %></td>
             <% end %>
-            <th>Tipo Exame</th>
-            <th>Data</th>
-            <th>-</th>
+            <td><%= arquivo.categoria.nome  unless arquivo.categoria_id.nil? %></td>
+            <td><%= arquivo.data.strftime("%d/%m/%Y") unless arquivo.data.nil? %></td>
+            <td><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{arquivo.asset.url}", class: "btn btn-default btn-xs", :target => "_blank" %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% @arquivos.each do |arquivo| %>
-              <tr>
-                <td><input type="checkbox" class="toll"></td>
-                <td><%= arquivo.id %></td>
-                <td><%= arquivo.consulta.funcionario.nome %> </td>
-                <td><%= arquivo.consulta.funcionario.matricula %></td>
-                <td><%= arquivo.consulta.funcionario.rg %></td>
-                 <% if !@empresa %>
-                  <td><%= arquivo.consulta.empresa.user.nome %></td>
-                  <td><%= arquivo.consulta.empresa.nome %></td>
-                <% end %>
-                <td><%= arquivo.categoria.nome  unless arquivo.categoria_id.nil? %></td>
-                <td><%= arquivo.data.strftime("%d/%m/%Y") unless arquivo.data.nil? %></td>
-                <td><%= link_to '<span class="glyphicon glyphicon-cloud-download"></span> Download'.html_safe, "#{arquivo.asset.url}", class: "btn btn-default btn-xs", :target => "_blank" %></td>
-              </tr>
-          <% end %>
-     </tbody>
-      </table>
-  
+      <% end %>
+      
+    </tbody>
+  </table>
+  <% end -%>
+</div>
+
+<div class="row">
+  <div class="col-lg-3">
+    <a href="#" class="btn btn-success" id="btn_form_itens">Download de todos os selecionados</a>
+  </div>
 </div>
 
 <br />
 <script type="text/javascript">
 
-$('.toll').popover({
-  selector: true,
-  trigger: 'hover',
-  title: 'Aviso Importante!',
-  content: 'Essa função ainda está em desenvolvimento, aguarde versão 2.0.'
-})
+  $('#btn_form_itens').click(function(){
+    $('#form_itens').submit();
+
+  })
+
+  $('.toll').popover({
+    selector: true,
+    trigger: 'hover',
+    content: 'Selecionar todos'
+  })
+
+  function toggle(source) {
+    checkboxes = $(".check");
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      checkboxes[i].checked = source.checked;
+    }
+  }
 
 </script>

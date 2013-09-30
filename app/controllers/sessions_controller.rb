@@ -1,7 +1,11 @@
 class SessionsController < ApplicationController
 	def new
 		@session = Session.new
-		render layout: false
+
+		respond_to do |format|
+	      format.html { render layout: false}
+	      format.json { render json: @funcionario, layout: false }
+	    end
 	end
 
 	def create
@@ -30,16 +34,23 @@ class SessionsController < ApplicationController
 				else
 					@empresa = Empresa.login(@session.login, @session.password)
 					if @empresa
-						@link = User.where(id: @empresa.user_id).first
-						LogEmpresa.create(:empresa_id => @empresa.id, :mensagem => "[Login] Empresa #{@empresa.nome} fez login");
-						session[:empresa_id]	= @empresa.id
-						session[:empresa_nome]	= @empresa.nome
-						session[:empresa_email]	= @empresa.email
-						session[:empresa_cnpj]	= @empresa.cnpj
-						session[:user_link] = @link.avatar.url(:thumb)
-						session[:user]			= false
-						session[:logado]		= true
-						redirect_to session[:requested_url] || "exames#index"
+						if @empresa.status == 1
+							@link = User.where(id: @empresa.user_id).first
+							LogEmpresa.create(:empresa_id => @empresa.id, :mensagem => "[Login] Empresa #{@empresa.nome} fez login");
+							session[:empresa_id]	= @empresa.id
+							session[:empresa_nome]	= @empresa.nome
+							session[:empresa_email]	= @empresa.email
+							session[:empresa_cnpj]	= @empresa.cnpj
+							session[:user_link] = @link.avatar.url(:thumb)
+							session[:user]			= false
+							session[:logado]		= true
+							redirect_to session[:requested_url] || "exames#index"
+						elsif @empresa.status == 0
+							LogEmpresa.create(:empresa_id => @empresa.id, :mensagem => "[Login] Empresa #{@empresa.nome} tentou login, mas sua conta esta desabilitada");
+							redirect_to new_sessions_path, :notice => "Sua conta foi desabilitada, procure um administrador."
+						else
+							redirect_to new_sessions_path, :notice => "Falha no sistema, procure um administrador."						
+						end
 					else
 						redirect_to new_sessions_path, :notice => "Falha no login"
 					end

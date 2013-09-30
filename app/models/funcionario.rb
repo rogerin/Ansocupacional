@@ -1,7 +1,7 @@
 class Funcionario < ActiveRecord::Base
   attr_accessible :empresa_id, :nome, :rg, :matricula
   belongs_to :empresa
-  has_many :consultas
+  has_many :consultas, dependent: :destroy
 
 
 

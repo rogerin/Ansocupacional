@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Asset < ActiveRecord::Base
   attr_accessible :consulta_id, :asset,:assets, :categoria_id, :asset_updated_at, :asset_file_name, :asset_content_type, :asset_file_size, :data
   attr_accessor :basename
@@ -15,7 +16,7 @@ class Asset < ActiveRecord::Base
 	def basename
 		@funcionario = Funcionario.find(consulta.funcionario_id)
 		extension = File.extname(asset_file_name).downcase
-		self.asset_file_name = "#{@funcionario.nome}-#{@funcionario.rg}-#{@funcionario.matricula}-#{Time.now.to_i}#{extension}"
+		self.asset_file_name = "#{@funcionario.empresa.nome}-#{@funcionario.rg}_#{@funcionario.nome}-#{Time.now.to_i}#{extension}"
 	end
 
   

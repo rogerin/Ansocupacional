@@ -84,4 +84,15 @@ class EmpresasController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desabilitar
+    Empresa.where(:id => params[:id]).update_all(:status => 0)
+    redirect_to empresas_path
+  end
+
+  def habilitar
+    Empresa.where(:id => params[:id]).update_all(:status => 1)
+    redirect_to empresas_path
+  end
+
 end
