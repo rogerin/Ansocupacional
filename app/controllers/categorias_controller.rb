@@ -1,4 +1,8 @@
 class CategoriasController < ApplicationController
+
+  #before_filter :need_login, :except => :index, :unless => lambda{ |controller| controller.request.format.json? }
+
+
   # GET /categorias
   # GET /categorias.json
   def index

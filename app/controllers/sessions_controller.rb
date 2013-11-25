@@ -52,7 +52,7 @@ class SessionsController < ApplicationController
 							redirect_to new_sessions_path, :notice => "Falha no sistema, procure um administrador."						
 						end
 					else
-						redirect_to new_sessions_path, :notice => "Falha no login"
+						redirect_to new_sessions_path, :notice => "Nenhuma clinica e nenhuma empresa com esses dados."
 					end
 				end
 			else
@@ -98,6 +98,4 @@ class SessionsController < ApplicationController
 		session[:logado]		= nil
 		redirect_to new_sessions_path
 	end
-
-
 end

@@ -32,7 +32,13 @@
           <td><%= funcionario.nome %></td>
           <td><%= funcionario.rg %></td>
           <td><%= funcionario.matricula %></td>
-          <td><%= funcionario.empresa.nome %></td>
+          <td>
+            <% if funcionario.empresa_id == 0 %>
+              sem empresa, <%= link_to 'Editar!', edit_funcionario_path(funcionario) %>
+            <% else %>
+              <%= funcionario.empresa.nome %>
+            <% end %>
+          </td>
           <td></td>
           <td></td>
           <td>

@@ -1,5 +1,6 @@
 #encoding: utf-8
 class ConsultasController < ApplicationController
+  before_filter :need_login
   # GET /consultas
   # GET /consultas.json
   def index

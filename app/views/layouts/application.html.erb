@@ -46,8 +46,9 @@
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 							<li role="presentation" class="dropdown-header">Tipos de Exames</li>
 							  	<li> <%= link_to "Listar Tipos de exames", categorias_path %> </li>
+							  	<% if session[:user_tipo] == 1 %> 
 							  	<li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
-							
+								<% end %>
 								<li role="presentation" class="divider"></li>
 								<li role="presentation" class="dropdown-header">Relatórios</li>
 								<li> <%= link_to "Relatório de Acessos", log_empresas_path %> </li>
@@ -78,8 +79,9 @@
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 							<li role="presentation" class="dropdown-header">Tipos de Exames</li>
 							  	<li> <%= link_to "Listar Tipos de exames", categorias_path %> </li>
+							  	<% if session[:user_tipo] == 1 %> 
 							  	<li> <%= link_to "Novo tipo de exame", new_categoria_path %> </li>
-							
+								<% end %>
 								<li role="presentation" class="divider"></li>
 								<li role="presentation" class="dropdown-header">Relatórios</li>
 								<li> <%= link_to "Relatório de Acessos", log_empresas_path %> </li>
@@ -162,7 +164,7 @@
 <footer class="footer">
   <div class="container">
 	<p>
-		<a href="http://www.analisesistemas.com"><img src="http://www.analisesistemas.com/images/rodape_ans.png" /></a>
+		<a href="http://www.analisesistemas.com" target="_blank"><img src="http://www.analisesistemas.com/images/rodape_ans.png" /></a>
 	</p>
   </div>
 </footer>

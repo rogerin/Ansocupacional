@@ -5,7 +5,7 @@
       <% if session[:empresa_id] %>
       <% else %>
       <p>
-        <%= link_to 'Novo Funcionário', new_funcionario_path, class: 'btn btn-xs btn-default' %>
+        <%= link_to 'Novo Funcionário', new_funcionario_path, class: 'btn btn-sm btn-success' %>
         </p>
       <% end %>
     
@@ -53,12 +53,21 @@
     </thead>
     <tbody>
       <% @funcionarios.each do |funcionario| %>
-        <tr>
+        <tr 
+          <% if funcionario.empresa_id == 0 %>
+            class="danger"
+          <% else %>
+          <% end %>
+          >
           <td><%= funcionario.nome %></td>
           <td><%= funcionario.rg %></td>
           <td><%= funcionario.matricula %></td>
 
-          <td><%= funcionario.empresa.nome %></td>
+          <td><% if funcionario.empresa_id == 0 %>
+                <span>sem empresa, <%= link_to 'Editar!', edit_funcionario_path(funcionario) %> </span>
+              <% else %>
+                <%= funcionario.empresa.nome %>
+              <% end %></td>
           <td></td>
           <td></td>
           <td>

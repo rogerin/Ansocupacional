@@ -47,7 +47,7 @@ class FuncionariosController < ApplicationController
       scopeF = scopeF.where(empresa_id: params[:empresa][:empresa_id])
     end
 
-    @funcionarios = scopeF
+    @funcionarios = scopeF.all
 
     respond_to do |format|
       format.html # index.html.erb

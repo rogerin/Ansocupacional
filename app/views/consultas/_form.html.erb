@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <hr/ >
+    <hr />
 
 <div class="row">
   <div class="col-lg-3">
@@ -89,12 +89,16 @@
 
 
 <% end %>
+<div id="msgUpload">
+  <p>Não feche essa página, o arquivo está em processo de upload...</p>
+  <p>Enviando... <br/> <img src="<%= root_url %>load.gif" /> </p>
+</div>
 
 <script type="text/javascript">
 
 
 ;(function($){
-
+$("#msgUpload").hide();
 $('#alerta').hide();
 var nowTemp = new Date();
 var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
@@ -155,6 +159,8 @@ $('#formulario').submit(function(){
   if(file[0] && cat[0] && data) {
     console.log("envia form");
     $('#alerta').hide();
+    $(this).hide();
+    $("#msgUpload").show();
     return true;
   } else {
     console.log("nao envia form");

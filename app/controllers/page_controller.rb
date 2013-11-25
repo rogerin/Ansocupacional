@@ -1,4 +1,7 @@
 class PageController < ApplicationController
+
+  before_filter :need_login
+
   def index
     scope = LogEmpresa
     scopeAsset = Asset
@@ -32,10 +35,11 @@ class PageController < ApplicationController
       scope = scope.where(:empresa_id => session[:empresa_id])
 
       @cons = Consulta.where(:empresa_id => session[:empresa_id])
-      scopeAsset = scopeAsset.where(["assets.consulta_id = ? ", @cons])
+      scopeAsset = scopeAsset.where(:consulta_id => @cons)
     end
 
     @por_categoria = scopeAsset.select("COUNT(assets.categoria_id) as total, assets.categoria_id,assets.consulta_id").group("assets.categoria_id")
+    
     @acessos = scope.includes(:empresa).order("log_empresas.created_at DESC").limit(20)
 
     @categorias = Categoria.count

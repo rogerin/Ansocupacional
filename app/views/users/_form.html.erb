@@ -39,17 +39,17 @@
   <div class="form-group">
     <label class="col-lg-2 control-label">Senha</label>
     <div class="col-lg-4">
-      <%= f.password_field :password, class: 'form-control',:required => true  %>
+      <%= f.password_field :password_digest, class: 'form-control',:required => true  %>
     </div>
   </div>
-
+<!--
   <div class="form-group">
     <label class="col-lg-2 control-label">Confirmar senha</label>
     <div class="col-lg-4">
       <%= f.password_field :password_confirmation, class: 'form-control',:required => true  %>
     </div>
   </div>
-
+-->
 
  <div class="form-group">
     <label class="col-lg-2 control-label">Logomarca</label>
@@ -80,6 +80,8 @@
   <% else %>
     <%= f.hidden_field :tipo, :value => session["user_tipo"] %>
   <% end %>
+
+
 
 
   <div class="form-group">

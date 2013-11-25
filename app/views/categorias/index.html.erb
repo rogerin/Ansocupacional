@@ -1,6 +1,8 @@
 <h2>Tipos de exames</h2>
 <p>
+  <% if session[:user_tipo] == 1 %> 
   <%= link_to 'Novo tipo de exame', new_categoria_path, class: 'btn btn-sm btn-success' %>
+  <% end %>
 </p>
 <table class="table table-hover">
   <thead>
@@ -17,12 +19,14 @@
         <td><%= categoria.nome %></td>
         <td></td>
         <td></td>
-        <td>      
+        <td> 
+        <% if session[:user_tipo] == 1 %>     
           <div class="btn-group btn-group-sm">
             <%= link_to 'Visualizar', categoria, class: "btn btn-default" %> 
             <%= link_to 'Editar', edit_categoria_path(categoria), class: "btn btn-default" %>
-            <%= link_to 'Deletar', categoria, method: :delete, data: { confirm: 'Realmente deseja deletar?' }, class: "btn btn-default" %>
+            <%= link_to 'Deletar', categoria, method: :delete, data: { confirm: 'Realmente deseja deletar esse tipo de exame? caso seja deletado todos os exames já cadastrados com esse tipo tambem será deletado.' }, class: "btn btn-default" %>
           </div>
+        <% end %>
         </td>
       </tr>
     <% end %>

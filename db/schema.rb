@@ -38,7 +38,8 @@ ActiveRecord::Schema.define(:version => 20130930160053) do
     t.datetime "updated_at",     :null => false
   end
 
-  create_table "empresas", :force => true do |t|
+  create_table "empresas", :id => false, :force => true do |t|
+    t.integer  "id",                             :null => false
     t.string   "nome"
     t.string   "cnpj"
     t.string   "email"
@@ -50,7 +51,8 @@ ActiveRecord::Schema.define(:version => 20130930160053) do
     t.integer  "status",          :default => 1, :null => false
   end
 
-  create_table "funcionarios", :force => true do |t|
+  create_table "funcionarios", :id => false, :force => true do |t|
+    t.integer  "id",         :null => false
     t.string   "nome"
     t.string   "rg"
     t.integer  "empresa_id"

@@ -13,6 +13,15 @@
     </div>
   <% end %>
 
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label">ID</label>
+    <div class="col-lg-4">
+      <%= f.text_field :id, class: 'form-control',:required => true %>
+      <small>Verificar com administrador.</small>
+    </div>
+  </div>
+  
   <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :nome %></label>
     <div class="col-lg-4">

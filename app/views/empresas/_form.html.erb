@@ -12,11 +12,20 @@
   <% end %>
 
   <div class="form-group">
+    <label class="col-lg-2 control-label">ID</label>
+    <div class="col-lg-4">
+      <%= f.text_field :id, class: 'form-control',:required => true %>
+      <small>Verificar com administrador.</small>
+    </div>
+  </div>
+  
+  <div class="form-group">
     <label class="col-lg-2 control-label"><%= f.label :nome %></label>
     <div class="col-lg-4">
       <%= f.text_field :nome, class: 'form-control',:required => true %>
     </div>
   </div>
+
   <div class="form-group">
     <label  class="col-lg-2 control-label"><%= f.label :cnpj %></label>
     <div class="col-lg-4">
@@ -38,16 +47,17 @@
   <div class="form-group">
     <label class="col-lg-2 control-label">Senha</label>
     <div class="col-lg-4">
-      <%= f.password_field :password, class: 'form-control',:required => true %>
+      <%= f.password_field :password_digest, class: 'form-control',:required => true %>
     </div>
   </div>
+  <!--
   <div class="form-group">
     <label class="col-lg-2 control-label">Confirmar senha</label>
     <div class="col-lg-4">
       <%= f.password_field :password_confirmation, class: 'form-control',:required => true %>
     </div>
   </div>
-  
+  -->
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-2">
       <%= f.hidden_field :user_id, :value => session["user_id"] %>
