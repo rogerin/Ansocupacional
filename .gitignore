@@ -6,6 +6,11 @@
 
 # Ignore bundler config
 /.bundle
+/public/exames
+/public/zip
+/public/avatars
+
+
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
